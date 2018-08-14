@@ -16,13 +16,11 @@ public class CarServiceImpl implements CarService {
 
 	@Autowired
 	private CarDao carRepository;
-	
-	
 
 	@Override
 	@Transactional(readOnly = false)
 	public CarTO saveCar(CarTO car) {
-		CarEntity carEntity =carRepository.save(CarMapper.toCarEntity(car));
+		CarEntity carEntity = carRepository.save(CarMapper.toCarEntity(car));
 		return CarMapper.toCarTO(carEntity);
 	}
 
