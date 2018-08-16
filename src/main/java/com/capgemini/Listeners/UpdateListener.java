@@ -9,13 +9,12 @@ import javax.persistence.PreUpdate;
 import com.capgemini.domain.AbstractEntity;
 
 public class UpdateListener {
-	
+
 	@PrePersist
 	@PreUpdate
-	public void setUpdatedAt(final AbstractEntity entity){
+	public void setUpdatedAt(final AbstractEntity entity) {
 		Date date = new Date();
 		entity.setUpdatedAt(new Timestamp(date.getTime()));
 	}
-	
-	
+
 }

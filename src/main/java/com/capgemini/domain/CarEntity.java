@@ -12,12 +12,12 @@ import com.capgemini.Listeners.UpdateListener;
  *
  */
 @Entity
-@EntityListeners({CreateListener.class, UpdateListener.class})
+@EntityListeners({ CreateListener.class, UpdateListener.class })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name="CAR")
+@Table(name = "CAR")
 public class CarEntity extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -37,7 +37,7 @@ public class CarEntity extends AbstractEntity implements Serializable {
 	private Integer enginePower;
 	@Column(nullable = false)
 	private Integer mileage;
-	
+
 	// for hibernate
 	public CarEntity() {
 	}
@@ -122,5 +122,5 @@ public class CarEntity extends AbstractEntity implements Serializable {
 	public void setMileage(Integer mileage) {
 		this.mileage = mileage;
 	}
-	
+
 }

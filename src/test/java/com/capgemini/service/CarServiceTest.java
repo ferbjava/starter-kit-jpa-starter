@@ -50,7 +50,7 @@ public class CarServiceTest {
 
 	@Test
 	@Transactional
-	public void shouldReturnExceptionDuringCreation() {
+	public void shouldReturnExceptionDuringTOCreation() {
 		// given
 		final String type = "combii";
 		final String brand = "VW";

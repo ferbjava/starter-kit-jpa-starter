@@ -10,21 +10,21 @@ import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created", nullable = false, updatable = false)
 	private Date created;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated", nullable = false)
 	private Date updated;
 
 	public void setCreatedAt(final Timestamp date) {
-		this.created=date;
+		this.created = date;
 	}
-	
+
 	public void setUpdatedAt(final Timestamp date) {
-		this.updated=date;
+		this.updated = date;
 	}
 
 	public Date getCreatedAt() {
@@ -34,6 +34,5 @@ public abstract class AbstractEntity {
 	public Date getUpdatedAt() {
 		return updated;
 	}
-	
 
 }

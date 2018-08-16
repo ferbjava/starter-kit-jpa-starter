@@ -8,18 +8,18 @@ import com.capgemini.Listeners.CreateListener;
 import com.capgemini.Listeners.UpdateListener;
 
 @Entity
-@EntityListeners({CreateListener.class, UpdateListener.class})
+@EntityListeners({ CreateListener.class, UpdateListener.class })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name="Position")
+@Table(name = "Position")
 public class PositionEntity extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false, length = 45)
 	private String position;
-	
+
 	// for hibernate
 	public PositionEntity() {
 	}
@@ -40,5 +40,5 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	
+
 }

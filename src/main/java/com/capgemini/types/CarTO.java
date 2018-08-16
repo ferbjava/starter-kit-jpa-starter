@@ -24,7 +24,7 @@ public class CarTO {
 		this.enginePower = enginePower;
 		this.mileage = mileage;
 	}
-	
+
 	public CarTO(Long id, String type, String brand, String model, Integer productionYear, String color,
 			Integer engineCapacity, Integer enginePower, Integer mileage) {
 		super();
@@ -38,7 +38,7 @@ public class CarTO {
 		this.enginePower = enginePower;
 		this.mileage = mileage;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -74,8 +74,8 @@ public class CarTO {
 	public Long getId() {
 		return id;
 	}
-	
-	public static CarTOBuilder builder(){
+
+	public static CarTOBuilder builder() {
 		return new CarTOBuilder();
 	}
 
@@ -89,102 +89,101 @@ public class CarTO {
 		private Integer engineCapacity;
 		private Integer enginePower;
 		private Integer mileage;
-		
+
 		public CarTOBuilder() {
 			super();
 		}
-		
-		public CarTOBuilder withId(Long id){
-			this.id=id;
+
+		public CarTOBuilder withId(Long id) {
+			this.id = id;
 			return this;
 		}
-		
-		public CarTOBuilder withType(String type){
-			this.type=type;
+
+		public CarTOBuilder withType(String type) {
+			this.type = type;
 			return this;
 		}
-		
-		public CarTOBuilder withBrand(String brand){
-			this.brand=brand;
+
+		public CarTOBuilder withBrand(String brand) {
+			this.brand = brand;
 			return this;
 		}
-		
-		public CarTOBuilder withModel(String model){
-			this.model=model;
+
+		public CarTOBuilder withModel(String model) {
+			this.model = model;
 			return this;
 		}
-		
-		public CarTOBuilder withProductionYear(Integer productionYear){
-			this.productionYear=productionYear;
+
+		public CarTOBuilder withProductionYear(Integer productionYear) {
+			this.productionYear = productionYear;
 			return this;
 		}
-		
-		public CarTOBuilder withColor(String color){
-			this.color=color;
+
+		public CarTOBuilder withColor(String color) {
+			this.color = color;
 			return this;
 		}
-		
-		public CarTOBuilder withEngineCapacity(Integer engineCapacity){
-			this.engineCapacity=engineCapacity;
+
+		public CarTOBuilder withEngineCapacity(Integer engineCapacity) {
+			this.engineCapacity = engineCapacity;
 			return this;
 		}
-		
-		public CarTOBuilder withEnginePower(Integer enginePower){
-			this.enginePower=enginePower;
+
+		public CarTOBuilder withEnginePower(Integer enginePower) {
+			this.enginePower = enginePower;
 			return this;
 		}
-		
-		public CarTOBuilder withMileage(Integer mileage){
-			this.mileage=mileage;
+
+		public CarTOBuilder withMileage(Integer mileage) {
+			this.mileage = mileage;
 			return this;
 		}
-		
-		public CarTO build(){
+
+		public CarTO build() {
 			checkBeforeBuild(type, brand, model, productionYear, color, engineCapacity, enginePower, mileage);
 			return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, enginePower, mileage);
 		}
 
-		private void checkBeforeBuild(String type, String brand, String model, Integer productionYear,
-				String color, Integer engineCapacity, Integer enginePower, Integer mileage) {
-			boolean isType=false;
-			if(type!=null&&!type.isEmpty()){
+		private void checkBeforeBuild(String type, String brand, String model, Integer productionYear, String color,
+				Integer engineCapacity, Integer enginePower, Integer mileage) {
+			boolean isType = false;
+			if (type != null && !type.isEmpty()) {
 				isType = true;
 			}
-			boolean isBrand=false;
-			if(brand!=null&&!brand.isEmpty()){
+			boolean isBrand = false;
+			if (brand != null && !brand.isEmpty()) {
 				isBrand = true;
 			}
-			boolean isModel=false;
-			if(model!=null&&!model.isEmpty()){
+			boolean isModel = false;
+			if (model != null && !model.isEmpty()) {
 				isModel = true;
 			}
-			boolean isProductionYear=false;
-			if(productionYear!=null){
+			boolean isProductionYear = false;
+			if (productionYear != null) {
 				isProductionYear = true;
 			}
-			boolean isColor=false;
-			if(color!=null&&!color.isEmpty()){
+			boolean isColor = false;
+			if (color != null && !color.isEmpty()) {
 				isColor = true;
 			}
-			boolean isEngineCap=false;
-			if(engineCapacity!=null){
+			boolean isEngineCap = false;
+			if (engineCapacity != null) {
 				isEngineCap = true;
 			}
-			boolean isEnginePower=false;
-			if(enginePower!=null){
+			boolean isEnginePower = false;
+			if (enginePower != null) {
 				isEnginePower = true;
 			}
-			boolean isMileage=false;
-			if(mileage!=null){
+			boolean isMileage = false;
+			if (mileage != null) {
 				isMileage = true;
 			}
-			
-			if(!isType||!isBrand||!isModel||!isProductionYear||!isColor||!isEngineCap||!isEnginePower||!isMileage){
-				throw new RuntimeException("Incorrect car to be created");
+
+			if (!isType || !isBrand || !isModel || !isProductionYear || !isColor || !isEngineCap || !isEnginePower
+					|| !isMileage) {
+				throw new RuntimeException("Incorrect 'Car' to be created");
 			}
 		}
-		
 	}
-	
-	
+
 }

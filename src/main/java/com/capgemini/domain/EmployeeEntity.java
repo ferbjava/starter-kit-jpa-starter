@@ -3,6 +3,7 @@ package com.capgemini.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -20,12 +21,12 @@ import com.capgemini.Listeners.CreateListener;
 import com.capgemini.Listeners.UpdateListener;
 
 @Entity
-@EntityListeners({CreateListener.class, UpdateListener.class})
+@EntityListeners({ CreateListener.class, UpdateListener.class })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "EMPLOYEE")
 public class EmployeeEntity extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -35,12 +36,20 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 	private String lastName;
 	@Column(nullable = false)
 	private Date dateBirth;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Position", nullable = false)
 	private PositionEntity position;
-	
-    public EmployeeEntity() {
-    }
+
+	public EmployeeEntity() {
+	}
+
+	public EmployeeEntity(String firstName, String lastName, Date dateBirth, PositionEntity position) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateBirth = dateBirth;
+		this.position = position;
+	}
 
 	public Long getId() {
 		return id;
@@ -77,6 +86,5 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 	public void setPosition(PositionEntity position) {
 		this.position = position;
 	}
-	
-	
+
 }

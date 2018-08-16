@@ -38,32 +38,92 @@ public class EmployeeTO {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
 	public String getLastName() {
 		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public Date getDateBirth() {
 		return dateBirth;
 	}
 
-	public void setDateBirth(Date dateBirth) {
-		this.dateBirth = dateBirth;
-	}
-
 	public PositionTO getPosition() {
 		return position;
 	}
 
-	public void setPosition(PositionTO position) {
-		this.position = position;
+	public static EmployeeTOBuilder builder() {
+		return new EmployeeTOBuilder();
 	}
 
+	public static class EmployeeTOBuilder {
+
+		private Long id;
+		private String firstName;
+		private String lastName;
+		private Date dateBirth;
+		private PositionTO position;
+
+		public EmployeeTOBuilder() {
+			super();
+		}
+
+		public EmployeeTOBuilder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public EmployeeTOBuilder withFirstName(String firstName) {
+			this.firstName = firstName;
+			return this;
+		}
+
+		public EmployeeTOBuilder withLastName(String lastName) {
+			this.lastName = lastName;
+			return this;
+		}
+
+		public EmployeeTOBuilder withDateBirth(Date dateBirth) {
+			this.dateBirth = dateBirth;
+			return this;
+		}
+
+		public EmployeeTOBuilder withPosition(PositionTO position) {
+			this.position = position;
+			return this;
+		}
+
+		public EmployeeTO build() {
+			checkBeforeBuild(firstName, lastName, dateBirth, position);
+			return new EmployeeTO(id, firstName, lastName, dateBirth, position);
+		}
+
+		private void checkBeforeBuild(String firstName, String lastName, Date dateBirth, PositionTO position) {
+			boolean isFirstName = false;
+			if (firstName != null && !firstName.isEmpty()) {
+				isFirstName = true;
+			}
+			boolean isLastName = false;
+			if (lastName != null && !lastName.isEmpty()) {
+				isLastName = true;
+			}
+			boolean isDateBirth = false;
+			if (!dateBirth.equals(null)) {
+				isDateBirth = true;
+			}
+			boolean isPosition = false;
+			if (!position.equals(null)) {
+				isPosition = true;
+			}
+
+			if (!isFirstName || !isLastName || !isDateBirth || !isPosition) {
+				throw new RuntimeException("Incorrect 'Employee' to be created");
+			}
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
+				+ dateBirth + ", position=" + position + "]";
+	}
+	
 }

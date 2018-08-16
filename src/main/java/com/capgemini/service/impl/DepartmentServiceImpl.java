@@ -20,7 +20,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
 	private PositionDao positionRepository;
-	
+
 	@Autowired
 	private EmployeeDao employeeRepository;
 
@@ -67,5 +67,5 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public void deleteEmployee(Long id) {
 		employeeRepository.delete(id);
 	}
-	
+
 }

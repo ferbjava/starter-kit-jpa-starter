@@ -1,26 +1,31 @@
 package com.capgemini.mappers;
 
+import java.util.Date;
+
 import com.capgemini.domain.EmployeeEntity;
+import com.capgemini.domain.PositionEntity;
 import com.capgemini.types.EmployeeTO;
+import com.capgemini.types.EmployeeTO.EmployeeTOBuilder;
+import com.capgemini.types.PositionTO;
 
 public class EmployeeMapper {
 
-	public static EmployeeTO toEmployeeTO(EmployeeEntity entity){
-		EmployeeTO employeeTO = new EmployeeTO();
-		employeeTO.setFirstName(entity.getFirstName());
-		employeeTO.setLastName(entity.getLastName());
-		employeeTO.setDateBirth(entity.getDateBirth());
-		employeeTO.setPosition(PositionMapper.toPositionTO(entity.getPosition()));
-		return employeeTO;
+	public static EmployeeTO toEmployeeTO(EmployeeEntity entity) {
+		Long id = entity.getId();
+		String firstName = entity.getFirstName();
+		String lastName = entity.getLastName();
+		Date dateBirth = entity.getDateBirth();
+		PositionTO position = PositionMapper.toPositionTO(entity.getPosition());
+		return new EmployeeTOBuilder().withId(id).withFirstName(firstName).withLastName(lastName)
+				.withDateBirth(dateBirth).withPosition(position).build();
 	}
-	
-	public static EmployeeEntity toEmployeeEntity(EmployeeTO employeeTO){
-		EmployeeEntity entity = new EmployeeEntity();
-		entity.setFirstName(employeeTO.getFirstName());
-		entity.setLastName(employeeTO.getLastName());
-		entity.setDateBirth(employeeTO.getDateBirth());
-		entity.setPosition(PositionMapper.toPositionEntity(employeeTO.getPosition()));
-		return entity;
+
+	public static EmployeeEntity toEmployeeEntity(EmployeeTO employeeTO) {
+		String firstName = employeeTO.getFirstName();
+		String lastName = employeeTO.getLastName();
+		Date dateBirth = employeeTO.getDateBirth();
+		PositionEntity position = PositionMapper.toPositionEntity(employeeTO.getPosition());
+		return new EmployeeEntity(firstName, lastName, dateBirth, position);
 	}
-	
+
 }
