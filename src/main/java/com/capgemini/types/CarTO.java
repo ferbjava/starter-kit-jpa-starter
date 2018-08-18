@@ -39,6 +39,10 @@ public class CarTO {
 		this.mileage = mileage;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -69,10 +73,6 @@ public class CarTO {
 
 	public Integer getMileage() {
 		return mileage;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public static CarTOBuilder builder() {

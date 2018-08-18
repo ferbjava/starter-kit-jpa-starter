@@ -1,5 +1,8 @@
 package com.capgemini.mappers;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.capgemini.domain.CarEntity;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
@@ -37,6 +40,20 @@ public class CarMapper {
 		Integer enginePower = carTO.getEnginePower();
 		Integer mileage = carTO.getMileage();
 		return new CarEntity(type, brand, model, productionYear, color, engineCapacity, enginePower, mileage);
+	}
+
+	public static Set<CarTO> map2TOs(Set<CarEntity> entities) {
+		if (entities == null) {
+			return null;
+		}
+		return entities.stream().map(CarMapper::toCarTO).collect(Collectors.toSet());
+	}
+
+	public static Set<CarEntity> map2Entities(Set<CarTO> carTOs) {
+		if (carTOs == null) {
+			return null;
+		}
+		return carTOs.stream().map(CarMapper::toCarEntity).collect(Collectors.toSet());
 	}
 
 }

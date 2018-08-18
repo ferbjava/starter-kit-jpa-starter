@@ -1,19 +1,25 @@
 package com.capgemini.types;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class PositionTO {
 
 	private Long id;
 	private String position;
+	private Set<EmployeeTO> employees = new HashSet<>();
 
-	public PositionTO(Long id, String position) {
+	public PositionTO(Long id, String position, Set<EmployeeTO> employees) {
 		super();
 		this.id = id;
 		this.position = position;
+		this.employees.addAll(employees);
 	}
 
-	public PositionTO(String position) {
+	public PositionTO(String position, Set<EmployeeTO> employees) {
 		super();
 		this.position = position;
+		this.employees.addAll(employees);
 	}
 
 	public Long getId() {
@@ -28,17 +34,24 @@ public class PositionTO {
 		return new PositionTOBuilder();
 	}
 
+	public Set<EmployeeTO> getEmployees() {
+		if (employees == null) {
+			return null;
+		}
+		return employees;
+	}
+
+	public void setEmployees(Set<EmployeeTO> employees) {
+		this.employees.addAll(employees);
+	}
+
 	public static class PositionTOBuilder {
 		private Long id;
 		private String position;
+		private Set<EmployeeTO> employees = new HashSet<>();
 
 		public PositionTOBuilder() {
 			super();
-		}
-
-		public PositionTOBuilder withPosition(String position) {
-			this.position = position;
-			return this;
 		}
 
 		public PositionTOBuilder withId(Long id) {
@@ -46,9 +59,19 @@ public class PositionTO {
 			return this;
 		}
 
+		public PositionTOBuilder withPosition(String position) {
+			this.position = position;
+			return this;
+		}
+
+		public PositionTOBuilder withEmployees(Set<EmployeeTO> employees) {
+			this.employees.addAll(employees);
+			return this;
+		}
+
 		public PositionTO build() {
 			checkBeforeBuild(position);
-			return new PositionTO(id, position);
+			return new PositionTO(id, position, employees);
 		}
 
 		private void checkBeforeBuild(String position) {
@@ -63,6 +86,7 @@ public class PositionTO {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
@@ -77,6 +101,11 @@ public class PositionTO {
 		if (getClass() != obj.getClass())
 			return false;
 		PositionTO other = (PositionTO) obj;
+		if (employees == null) {
+			if (other.employees != null)
+				return false;
+		} else if (!employees.equals(other.employees))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -92,7 +121,7 @@ public class PositionTO {
 
 	@Override
 	public String toString() {
-		return "PositionTO [id=" + id + ", position=" + position + "]";
+		return "PositionTO [id=" + id + ", position=" + position + ", employees=" + employees + "]";
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.capgemini.Listeners.CreateListener;
@@ -35,20 +38,23 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 	@Column(nullable = false, length = 20)
 	private String lastName;
 	@Column(nullable = false)
-	private Date dateBirth;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "Position", nullable = false)
-	private PositionEntity position;
+	private Calendar dateBirth;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "CARER_CAR", joinColumns = {
+			@JoinColumn(name = "EMPLOYEE_ID", nullable = false, updatable = false) }, inverseJoinColumns = {
+			@JoinColumn(name = "CAR_ID", nullable = false, updatable = false) })
+	private Set<CarEntity> cars = new HashSet<>();
 
 	public EmployeeEntity() {
 	}
 
-	public EmployeeEntity(String firstName, String lastName, Date dateBirth, PositionEntity position) {
+	public EmployeeEntity(String firstName, String lastName, Calendar dateBirth,
+			Set<CarEntity> cars) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateBirth = dateBirth;
-		this.position = position;
+		this.cars = cars;
 	}
 
 	public Long getId() {
@@ -71,20 +77,26 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Date getDateBirth() {
+	public Calendar getDateBirth() {
 		return dateBirth;
 	}
 
-	public void setDateBirth(Date dateBirth) {
+	public void setDateBirth(Calendar dateBirth) {
 		this.dateBirth = dateBirth;
 	}
 
-	public PositionEntity getPosition() {
-		return position;
+	public Set<CarEntity> getCars() {
+		return cars;
 	}
 
-	public void setPosition(PositionEntity position) {
-		this.position = position;
+	public void setCars(Set<CarEntity> cars) {
+		this.cars = cars;
 	}
 
+	@Override
+	public String toString() {
+		return "EmployeeEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
+				+ dateBirth + ", cars=" + cars + "]";
+	}
+	
 }

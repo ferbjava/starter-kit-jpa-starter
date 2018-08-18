@@ -1,33 +1,36 @@
 package com.capgemini.types;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmployeeTO {
 
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private Date dateBirth;
-	private PositionTO position;
+	private Calendar dateBirth;
+	private Set<CarTO> cars = new HashSet<>();
 
 	public EmployeeTO() {
 	}
 
-	public EmployeeTO(Long id, String firstName, String lastName, Date dateBirth, PositionTO position) {
+	public EmployeeTO(Long id, String firstName, String lastName, Calendar dateBirth,
+			Set<CarTO> cars) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateBirth = dateBirth;
-		this.position = position;
+		this.cars = cars;
 	}
 
-	public EmployeeTO(String firstName, String lastName, Date dateBirth, PositionTO position) {
+	public EmployeeTO(String firstName, String lastName, Calendar dateBirth, Set<CarTO> cars) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateBirth = dateBirth;
-		this.position = position;
+		this.cars = cars;
 	}
 
 	public Long getId() {
@@ -42,12 +45,12 @@ public class EmployeeTO {
 		return lastName;
 	}
 
-	public Date getDateBirth() {
+	public Calendar getDateBirth() {
 		return dateBirth;
 	}
 
-	public PositionTO getPosition() {
-		return position;
+	public Set<CarTO> getCars() {
+		return cars;
 	}
 
 	public static EmployeeTOBuilder builder() {
@@ -59,8 +62,8 @@ public class EmployeeTO {
 		private Long id;
 		private String firstName;
 		private String lastName;
-		private Date dateBirth;
-		private PositionTO position;
+		private Calendar dateBirth;
+		private Set<CarTO> cars;
 
 		public EmployeeTOBuilder() {
 			super();
@@ -81,22 +84,22 @@ public class EmployeeTO {
 			return this;
 		}
 
-		public EmployeeTOBuilder withDateBirth(Date dateBirth) {
+		public EmployeeTOBuilder withDateBirth(Calendar dateBirth) {
 			this.dateBirth = dateBirth;
 			return this;
 		}
 
-		public EmployeeTOBuilder withPosition(PositionTO position) {
-			this.position = position;
+		public EmployeeTOBuilder withCars(Set<CarTO> cars) {
+			this.cars = cars;
 			return this;
 		}
 
 		public EmployeeTO build() {
-			checkBeforeBuild(firstName, lastName, dateBirth, position);
-			return new EmployeeTO(id, firstName, lastName, dateBirth, position);
+			checkBeforeBuild(firstName, lastName, dateBirth);
+			return new EmployeeTO(id, firstName, lastName, dateBirth, cars);
 		}
 
-		private void checkBeforeBuild(String firstName, String lastName, Date dateBirth, PositionTO position) {
+		private void checkBeforeBuild(String firstName, String lastName, Calendar dateBirth) {
 			boolean isFirstName = false;
 			if (firstName != null && !firstName.isEmpty()) {
 				isFirstName = true;
@@ -109,12 +112,8 @@ public class EmployeeTO {
 			if (!dateBirth.equals(null)) {
 				isDateBirth = true;
 			}
-			boolean isPosition = false;
-			if (!position.equals(null)) {
-				isPosition = true;
-			}
 
-			if (!isFirstName || !isLastName || !isDateBirth || !isPosition) {
+			if (!isFirstName || !isLastName || !isDateBirth) {
 				throw new RuntimeException("Incorrect 'Employee' to be created");
 			}
 		}
@@ -123,7 +122,8 @@ public class EmployeeTO {
 	@Override
 	public String toString() {
 		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
-				+ dateBirth + ", position=" + position + "]";
+				+ dateBirth + ", cars=" + cars + "]";
 	}
 	
+
 }

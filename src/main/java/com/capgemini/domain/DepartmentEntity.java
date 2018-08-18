@@ -24,33 +24,41 @@ import com.capgemini.Listeners.UpdateListener;
 @Entity
 @EntityListeners({ CreateListener.class, UpdateListener.class })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name = "Position")
-public class PositionEntity extends AbstractEntity implements Serializable {
+@Table(name = "DEPARTMENT")
+public class DepartmentEntity extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false, length = 45)
-	private String position;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "position_id")
+	private String adress;
+	@Column(nullable = false)
+	private Integer phoneNumber;
+	@Column(nullable = false, length = 45)
+	private String email;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "department_id")
 	private Set<EmployeeEntity> employees = new HashSet<>();
 
 	// for hibernate
-	public PositionEntity() {
+	public DepartmentEntity() {
 	}
 
-	public PositionEntity(Long id, String position, Set<EmployeeEntity> employees) {
+	public DepartmentEntity(Long id, String adress, Integer phoneNumber, String email, Set<EmployeeEntity> employees) {
 		super();
 		this.id = id;
-		this.position = position;
+		this.adress = adress;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.employees = employees;
 	}
 
-	public PositionEntity(String position, Set<EmployeeEntity> employees) {
+	public DepartmentEntity(String adress, Integer phoneNumber, String email, Set<EmployeeEntity> employees) {
 		super();
-		this.position = position;
+		this.adress = adress;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.employees = employees;
 	}
 
@@ -58,12 +66,28 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 		return id;
 	}
 
-	public String getPosition() {
-		return position;
+	public String getAdress() {
+		return adress;
 	}
 
-	public void setPosition(String position) {
-		this.position = position;
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Set<EmployeeEntity> getEmployees() {
@@ -80,7 +104,8 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PositionEntity [id=" + id + ", position=" + position + ", employees=" + employees + "]";
+		return "DepartmentEntity [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", employees=" + employees + "]";
 	}
 
 }

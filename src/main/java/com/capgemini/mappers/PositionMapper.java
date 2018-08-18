@@ -7,10 +7,25 @@ import com.capgemini.types.PositionTO.PositionTOBuilder;
 public class PositionMapper {
 
 	public static PositionTO toPositionTO(PositionEntity entity) {
-		return new PositionTOBuilder().withId(entity.getId()).withPosition(entity.getPosition()).build();
+		if (entity == null) {
+			return null;
+		}
+		return new PositionTOBuilder().withId(entity.getId()).withPosition(entity.getPosition())
+				.withEmployees(EmployeeMapper.map2TOs(entity.getEmployees())).build();
 	}
 
-	public static PositionEntity toPositionEntity(PositionTO positionTo) {
-		return new PositionEntity(positionTo.getPosition());
+	public static PositionEntity toPositionEntity(PositionTO positionTO) {
+		if (positionTO == null) {
+			return null;
+		}
+		return new PositionEntity(positionTO.getPosition(), EmployeeMapper.map2Entities(positionTO.getEmployees()));
+	}
+
+	public static PositionEntity toPositionEntityWithId(PositionTO positionTO) {
+		if (positionTO == null) {
+			return null;
+		}
+		return new PositionEntity(positionTO.getId(), positionTO.getPosition(),
+				EmployeeMapper.map2Entities(positionTO.getEmployees()));
 	}
 }
