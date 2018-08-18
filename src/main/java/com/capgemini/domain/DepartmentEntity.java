@@ -37,13 +37,13 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 	private Integer phoneNumber;
 	@Column(nullable = false, length = 45)
 	private String email;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "department_id")
 	private List<EmployeeEntity> employees = new ArrayList<>();
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "start_depertment_id")
 	private List<RentalEntity> rentalsStart = new ArrayList<>();
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "stop_depertment_id")
 	private List<RentalEntity> rentalsStop = new ArrayList<>();
 

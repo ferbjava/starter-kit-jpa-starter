@@ -108,7 +108,7 @@ public class EmployeeTO {
 				isLastName = true;
 			}
 			boolean isDateBirth = false;
-			if (!dateBirth.equals(null)) {
+			if (dateBirth!=null) {
 				isDateBirth = true;
 			}
 

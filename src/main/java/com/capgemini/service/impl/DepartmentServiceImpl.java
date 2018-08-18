@@ -41,8 +41,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public DepartmentTO findDepartmentById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		DepartmentEntity entity = departmentRepository.findOne(id);
+		return DepartmentMapper.toDepartmentTO(entity);
 	}
 	
 	@Override
@@ -97,14 +97,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteDepartment(Long id) {
-		// TODO Auto-generated method stub
+		departmentRepository.delete(id);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void deletePosition(Long id) {
 		positionRepository.delete(id);
-		
 	}
 
 	@Override
@@ -112,6 +111,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public void deleteEmployee(Long id) {
 		PositionEntity updatePosition = positionRepository.findPositionByEmployeeId(id).removeEmployee(id);
 		positionRepository.update(updatePosition);
+	}
+
+	@Override
+	public DepartmentTO updateDepartment(DepartmentTO department) {
+		DepartmentEntity entity = departmentRepository.update(DepartmentMapper.toDepartmentEntity(department));
+		return DepartmentMapper.toDepartmentTO(entity);
 	}
 
 }

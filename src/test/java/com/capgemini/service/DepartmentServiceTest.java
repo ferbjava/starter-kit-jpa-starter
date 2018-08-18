@@ -11,7 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.Utils.InsertData;
-import com.capgemini.domain.PositionEntity;
+import com.capgemini.types.DepartmentTO;
+import com.capgemini.types.DepartmentTO.DepartmentTOBuilder;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
 
@@ -49,9 +50,9 @@ public class DepartmentServiceTest {
 		InsertData data = new InsertData();
 		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
 		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1;
-		PositionTO savedPos1 = departmentService.savePosition(data.getPosById(0));
+		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
-		PositionTO savedPos3 = departmentService.savePosition(data.getPosById(2));
+		departmentService.savePosition(data.getPosById(2));
 
 		// when
 		long initialEmployeesNo = departmentService.findEmployeesNo();
@@ -68,9 +69,9 @@ public class DepartmentServiceTest {
 	public void shouldFindEmployeeById() {
 		// given
 		InsertData data = new InsertData();
-		PositionTO savedPos1 = departmentService.savePosition(data.getPosById(0));
+		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
-		PositionTO savedPos3 = departmentService.savePosition(data.getPosById(2));
+		departmentService.savePosition(data.getPosById(2));
 		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), null, savedPos2.getId());
 
 		// when
@@ -91,10 +92,10 @@ public class DepartmentServiceTest {
 		long EXPECTED_FINAL_POSITIONS_NUMBER = 2;
 		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
 		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
-		PositionTO savedPos1 = departmentService.savePosition(data.getPosById(0));
+		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
-		PositionTO savedPos3 = departmentService.savePosition(data.getPosById(2));
-		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), null, savedPos2.getId());
+		departmentService.savePosition(data.getPosById(2));
+		departmentService.saveEmployee(data.getEmplById(0), null, savedPos2.getId());
 
 		// when
 		long initialPositionsNumber = departmentService.findPositionsNo();
@@ -119,9 +120,9 @@ public class DepartmentServiceTest {
 		long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
 		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
 		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
-		PositionTO savedPos1 = departmentService.savePosition(data.getPosById(0));
+		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
-		PositionTO savedPos3 = departmentService.savePosition(data.getPosById(2));
+		departmentService.savePosition(data.getPosById(2));
 		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), null, savedPos2.getId());
 
 		// when
@@ -136,6 +137,79 @@ public class DepartmentServiceTest {
 		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNumber);
 		assertEquals(EXPECTED_FINAL_POSITIONS_NUMBER, finalPositionsNumber);
 		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNumber);
+	}
+
+	@Test
+	@Transactional
+	public void shouldAddDepartments() {
+		// given
+		InsertData data = new InsertData();
+		long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 0;
+		long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 3;
+
+		// when
+		long initialDepartmentsNo = departmentService.findDepartmentNo();
+		departmentService.saveDepartment(data.getDepById(0));
+		departmentService.saveDepartment(data.getDepById(1));
+		departmentService.saveDepartment(data.getDepById(2));
+		long finalDepartmentsNo = departmentService.findDepartmentNo();
+
+		// then
+		assertEquals(EXPECTED_INITIAL_DEPARTMENTS_NUMBER, initialDepartmentsNo);
+		assertEquals(EXPECTED_FINAL_DEPARTMENTS_NUMBER, finalDepartmentsNo);
+	}
+
+	@Test
+	@Transactional
+	public void shouldAddEmployeesToDepartment() {
+		// given
+		InsertData data = new InsertData();
+		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
+		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2;
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		departmentService.saveDepartment(data.getDepById(1));
+		departmentService.saveDepartment(data.getDepById(2));
+		PositionTO savedPos01 = departmentService.savePosition(data.getPosById(0));
+		PositionTO savedPos02 = departmentService.savePosition(data.getPosById(1));
+		departmentService.savePosition(data.getPosById(2));
+
+		// when
+		long initialEmployeesNo = departmentService.findEmployeesNo();
+		departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), savedPos01.getId());
+		departmentService.saveEmployee(data.getEmplById(1), savedDep01.getId(), savedPos02.getId());
+		long finalEmployeesNo = departmentService.findEmployeesNo();
+
+		// then
+		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNo);
+		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNo);
+	}
+
+	@Test
+	@Transactional
+	public void shouldUpdateDepartmentData() {
+		// given
+		InsertData data = new InsertData();
+		long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 1;
+		long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 1;
+		String EXPECTED_NEW_EMAIL = "jakis.email@gmail.com";
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		long initialDepartmentsNo = departmentService.findDepartmentNo();
+
+		// when
+		DepartmentTO updatedDepartment = new DepartmentTOBuilder()
+											.withId(savedDep01.getId())
+											.withAdress(savedDep01.getAdress())
+											.withEmail(EXPECTED_NEW_EMAIL)
+											.withPhoneNumber(savedDep01.getPhoneNumber())
+											.build();
+		DepartmentTO updatedAndSavedDepartment = departmentService.updateDepartment(updatedDepartment);
+		long finalDepartmentsNo = departmentService.findDepartmentNo();
+
+		// then
+		assertEquals(EXPECTED_INITIAL_DEPARTMENTS_NUMBER, initialDepartmentsNo);
+		assertEquals(EXPECTED_FINAL_DEPARTMENTS_NUMBER, finalDepartmentsNo);
+		assertEquals(savedDep01.getAdress(), updatedAndSavedDepartment.getAdress());
+		assertEquals(EXPECTED_NEW_EMAIL, updatedAndSavedDepartment.getEmail());
 	}
 
 }

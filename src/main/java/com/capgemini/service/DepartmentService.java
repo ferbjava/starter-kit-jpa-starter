@@ -8,6 +8,7 @@ public interface DepartmentService {
 	
 	DepartmentTO saveDepartment(DepartmentTO department);
 	DepartmentTO findDepartmentById(Long id);
+	DepartmentTO updateDepartment(DepartmentTO department);
 	
 	PositionTO savePosition(PositionTO position);
 	PositionTO findPositionById(Long id);

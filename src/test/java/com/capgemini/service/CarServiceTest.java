@@ -118,6 +118,7 @@ public class CarServiceTest {
 		String EXPECTED_COLOR = "pink";
 
 		// when
+		long initialCarsNo = carService.findCarNo();
 		CarTO updatedCar = new CarTOBuilder()
 				.withId(savedCar.getId())
 				.withType(savedCar.getType())
@@ -130,11 +131,14 @@ public class CarServiceTest {
 				.withMileage(savedCar.getMileage())
 				.build();
 		CarTO updatedAndSavedCar = carService.updateCar(updatedCar);
+		long finalCarsNo = carService.findCarNo();
+		
 		
 		// then
 		assertNotNull(updatedAndSavedCar);
 		assertEquals(updatedAndSavedCar.getId(), savedCar.getId());
 		assertEquals(EXPECTED_COLOR, updatedAndSavedCar.getColor());
+		assertEquals(initialCarsNo, finalCarsNo);
 	}
 
 }
