@@ -1,7 +1,7 @@
 package com.capgemini.mappers;
 
 import java.util.Calendar;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.capgemini.domain.CarEntity;
@@ -20,7 +20,7 @@ public class EmployeeMapper {
 		String firstName = entity.getFirstName();
 		String lastName = entity.getLastName();
 		Calendar dateBirth = entity.getDateBirth();
-		Set<CarTO> cars = CarMapper.map2TOs(entity.getCars());
+		List<CarTO> cars = CarMapper.map2TOs(entity.getCars());
 		return new EmployeeTOBuilder().withId(id).withFirstName(firstName).withLastName(lastName)
 				.withDateBirth(dateBirth).withCars(cars).build();
 	}
@@ -29,25 +29,26 @@ public class EmployeeMapper {
 		if (employeeTO == null) {
 			return null;
 		}
+		Long id = employeeTO.getId();
 		String firstName = employeeTO.getFirstName();
 		String lastName = employeeTO.getLastName();
 		Calendar dateBirth = employeeTO.getDateBirth();
-		Set<CarEntity> cars = CarMapper.map2Entities(employeeTO.getCars());
-		return new EmployeeEntity(firstName, lastName, dateBirth, cars);
+		List<CarEntity> cars = CarMapper.map2Entities(employeeTO.getCars());
+		return new EmployeeEntity(id, firstName, lastName, dateBirth, cars);
 	}
 
-	public static Set<EmployeeTO> map2TOs(Set<EmployeeEntity> entities) {
+	public static List<EmployeeTO> map2TOs(List<EmployeeEntity> entities) {
 		if (entities == null) {
 			return null;
 		}
-		return entities.stream().map(EmployeeMapper::toEmployeeTO).collect(Collectors.toSet());
+		return entities.stream().map(EmployeeMapper::toEmployeeTO).collect(Collectors.toList());
 	}
 
-	public static Set<EmployeeEntity> map2Entities(Set<EmployeeTO> employeeTOs) {
+	public static List<EmployeeEntity> map2Entities(List<EmployeeTO> employeeTOs) {
 		if (employeeTOs == null) {
 			return null;
 		}
-		return employeeTOs.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toSet());
+		return employeeTOs.stream().map(EmployeeMapper::toEmployeeEntity).collect(Collectors.toList());
 	}
 
 }

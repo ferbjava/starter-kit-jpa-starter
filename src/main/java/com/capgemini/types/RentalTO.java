@@ -1,15 +1,15 @@
 package com.capgemini.types;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class RentalTO {
 
 	private Long id;
-	private Timestamp dateStart;
-	private Timestamp dateStop;
+	private Calendar dateStart;
+	private Calendar dateStop;
 	private Double charge;
 
-	public RentalTO(Long id, Timestamp dateStart, Timestamp dateStop, Double charge) {
+	public RentalTO(Long id, Calendar dateStart, Calendar dateStop, Double charge) {
 		super();
 		this.id = id;
 		this.dateStart = dateStart;
@@ -17,7 +17,7 @@ public class RentalTO {
 		this.charge = charge;
 	}
 
-	public RentalTO(Timestamp dateStart, Timestamp dateStop, Double charge) {
+	public RentalTO(Calendar dateStart, Calendar dateStop, Double charge) {
 		super();
 		this.dateStart = dateStart;
 		this.dateStop = dateStop;
@@ -28,11 +28,11 @@ public class RentalTO {
 		return id;
 	}
 
-	public Timestamp getDateStart() {
+	public Calendar getDateStart() {
 		return dateStart;
 	}
 
-	public Timestamp getDateStop() {
+	public Calendar getDateStop() {
 		return dateStop;
 	}
 
@@ -47,8 +47,8 @@ public class RentalTO {
 	public static class RentalTOBuilder {
 
 		private Long id;
-		private Timestamp dateStart;
-		private Timestamp dateStop;
+		private Calendar dateStart;
+		private Calendar dateStop;
 		private Double charge;
 
 		public RentalTOBuilder() {
@@ -60,12 +60,12 @@ public class RentalTO {
 			return this;
 		}
 
-		public RentalTOBuilder withDateStart(Timestamp dateStart) {
+		public RentalTOBuilder withDateStart(Calendar dateStart) {
 			this.dateStart = dateStart;
 			return this;
 		}
 
-		public RentalTOBuilder withDateStop(Timestamp dateStop) {
+		public RentalTOBuilder withDateStop(Calendar dateStop) {
 			this.dateStop = dateStop;
 			return this;
 		}
@@ -80,11 +80,17 @@ public class RentalTO {
 			return new RentalTO(id, dateStart, dateStop, charge);
 		}
 
-		private void checkBeforeBuild(Timestamp dateStart, Timestamp dateStop, Double charge) {
+		private void checkBeforeBuild(Calendar dateStart, Calendar dateStop, Double charge) {
 			if (dateStart != null && dateStop != null && charge != null) {
 				throw new RuntimeException("Incorrect 'Rental' to be created");
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "RentalTO [id=" + id + ", dateStart=" + dateStart.getTime() + ", dateStop=" + dateStop.getTime()
+				+ ", charge=" + charge + "]";
 	}
 
 }

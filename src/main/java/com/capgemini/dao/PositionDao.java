@@ -4,4 +4,6 @@ import com.capgemini.domain.PositionEntity;
 
 public interface PositionDao extends Dao<PositionEntity, Long> {
 
+	PositionEntity findPositionByEmployeeId(Long id);
+
 }

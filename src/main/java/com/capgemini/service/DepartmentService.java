@@ -12,7 +12,7 @@ public interface DepartmentService {
 	PositionTO savePosition(PositionTO position);
 	PositionTO findPositionById(Long id);
 	
-	EmployeeTO saveEmployee(EmployeeTO employee, Long idPos, Long idDep);
+	EmployeeTO saveEmployee(EmployeeTO employee, Long idDep, Long idPos);
 	EmployeeTO findEmployeeById(Long id);
 	
 	long findDepartmentNo();

@@ -1,22 +1,22 @@
 package com.capgemini.types;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PositionTO {
 
 	private Long id;
 	private String position;
-	private Set<EmployeeTO> employees = new HashSet<>();
+	private List<EmployeeTO> employees = new ArrayList<>();
 
-	public PositionTO(Long id, String position, Set<EmployeeTO> employees) {
+	public PositionTO(Long id, String position, List<EmployeeTO> employees) {
 		super();
 		this.id = id;
 		this.position = position;
 		this.employees.addAll(employees);
 	}
 
-	public PositionTO(String position, Set<EmployeeTO> employees) {
+	public PositionTO(String position, List<EmployeeTO> employees) {
 		super();
 		this.position = position;
 		this.employees.addAll(employees);
@@ -34,21 +34,21 @@ public class PositionTO {
 		return new PositionTOBuilder();
 	}
 
-	public Set<EmployeeTO> getEmployees() {
+	public List<EmployeeTO> getEmployees() {
 		if (employees == null) {
 			return null;
 		}
 		return employees;
 	}
 
-	public void setEmployees(Set<EmployeeTO> employees) {
+	public void setEmployees(List<EmployeeTO> employees) {
 		this.employees.addAll(employees);
 	}
 
 	public static class PositionTOBuilder {
 		private Long id;
 		private String position;
-		private Set<EmployeeTO> employees = new HashSet<>();
+		private List<EmployeeTO> employees = new ArrayList<>();
 
 		public PositionTOBuilder() {
 			super();
@@ -64,7 +64,7 @@ public class PositionTO {
 			return this;
 		}
 
-		public PositionTOBuilder withEmployees(Set<EmployeeTO> employees) {
+		public PositionTOBuilder withEmployees(List<EmployeeTO> employees) {
 			this.employees.addAll(employees);
 			return this;
 		}

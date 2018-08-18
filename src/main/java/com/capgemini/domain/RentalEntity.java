@@ -1,7 +1,7 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,9 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false)
-	private Timestamp dateStart;
+	private Calendar dateStart;
 	@Column(nullable = true)
-	private Timestamp dateStop;
+	private Calendar dateStop;
 	@Column(nullable = false)
 	private Double charge;
 
@@ -37,7 +37,7 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 	public RentalEntity() {
 	}
 
-	public RentalEntity(Long id, Timestamp dateStart, Timestamp dateStop, Double charge) {
+	public RentalEntity(Long id, Calendar dateStart, Calendar dateStop, Double charge) {
 		super();
 		this.id = id;
 		this.dateStart = dateStart;
@@ -45,7 +45,7 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 		this.charge = charge;
 	}
 
-	public RentalEntity(Timestamp dateStart, Timestamp dateStop, Double charge) {
+	public RentalEntity(Calendar dateStart, Calendar dateStop, Double charge) {
 		super();
 		this.dateStart = dateStart;
 		this.dateStop = dateStop;
@@ -56,19 +56,19 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 		return id;
 	}
 
-	public Timestamp getDateStart() {
+	public Calendar getDateStart() {
 		return dateStart;
 	}
 
-	public void setDateStart(Timestamp dateStart) {
+	public void setDateStart(Calendar dateStart) {
 		this.dateStart = dateStart;
 	}
 
-	public Timestamp getDateStop() {
+	public Calendar getDateStop() {
 		return dateStop;
 	}
 
-	public void setDateStop(Timestamp dateStop) {
+	public void setDateStop(Calendar dateStop) {
 		this.dateStop = dateStop;
 	}
 
@@ -79,11 +79,11 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 	public void setCharge(Double charge) {
 		this.charge = charge;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "RentalEntity [id=" + id + ", dateStart=" + dateStart + ", dateStop=" + dateStop + ", charge=" + charge
+		return "RentalEntity [id=" + id + ", dateStart=" + dateStart.getTime() + ", dateStop=" + dateStop.getTime() + ", charge=" + charge
 				+ "]";
 	}
-
+	
 }

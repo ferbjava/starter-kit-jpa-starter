@@ -1,7 +1,7 @@
 package com.capgemini.types;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DepartmentTO {
 
@@ -9,27 +9,35 @@ public class DepartmentTO {
 	private String adress;
 	private Integer phoneNumber;
 	private String email;
-	private Set<EmployeeTO> employees = new HashSet<>();
+	private List<EmployeeTO> employees = new ArrayList<>();
+	private List<RentalTO> rentalsStart = new ArrayList<>();
+	private List<RentalTO> rentalsStop = new ArrayList<>();
 
 	public DepartmentTO() {
 		super();
 	}
 
-	public DepartmentTO(Long id, String adress, Integer phoneNumber, String email, Set<EmployeeTO> employees) {
+	public DepartmentTO(Long id, String adress, Integer phoneNumber, String email, List<EmployeeTO> employees,
+			List<RentalTO> rentalsStart, List<RentalTO> rentalsStop) {
 		super();
 		this.id = id;
 		this.adress = adress;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.employees = employees;
+		this.rentalsStart = rentalsStart;
+		this.rentalsStop = rentalsStop;
 	}
 
-	public DepartmentTO(String adress, Integer phoneNumber, String email, Set<EmployeeTO> employees) {
+	public DepartmentTO(String adress, Integer phoneNumber, String email, List<EmployeeTO> employees,
+			List<RentalTO> rentalsStart, List<RentalTO> rentalsStop) {
 		super();
 		this.adress = adress;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.employees = employees;
+		this.rentalsStart = rentalsStart;
+		this.rentalsStop = rentalsStop;
 	}
 
 	public Long getId() {
@@ -48,8 +56,16 @@ public class DepartmentTO {
 		return email;
 	}
 
-	public Set<EmployeeTO> getEmployees() {
+	public List<EmployeeTO> getEmployees() {
 		return employees;
+	}
+
+	public List<RentalTO> getRentalsStart() {
+		return rentalsStart;
+	}
+
+	public List<RentalTO> getRentalsStop() {
+		return rentalsStop;
 	}
 
 	public static DepartmentTOBuilder builder() {
@@ -61,7 +77,9 @@ public class DepartmentTO {
 		private String adress;
 		private Integer phoneNumber;
 		private String email;
-		private Set<EmployeeTO> employees = new HashSet<>();
+		private List<EmployeeTO> employees = new ArrayList<>();
+		private List<RentalTO> rentalsStart = new ArrayList<>();
+		private List<RentalTO> rentalsStop = new ArrayList<>();
 
 		public DepartmentTOBuilder() {
 			super();
@@ -87,14 +105,24 @@ public class DepartmentTO {
 			return this;
 		}
 
-		public DepartmentTOBuilder withEmployees(Set<EmployeeTO> employees) {
+		public DepartmentTOBuilder withEmployees(List<EmployeeTO> employees) {
 			this.employees.addAll(employees);
+			return this;
+		}
+
+		public DepartmentTOBuilder withRentalsStart(List<RentalTO> rentalsStart) {
+			this.rentalsStart.addAll(rentalsStart);
+			return this;
+		}
+
+		public DepartmentTOBuilder withRentalsStop(List<RentalTO> rentalsStop) {
+			this.rentalsStop.addAll(rentalsStop);
 			return this;
 		}
 
 		public DepartmentTO build() {
 			checkBeforeBuild(adress, phoneNumber, email);
-			return new DepartmentTO(id, adress, phoneNumber, email, employees);
+			return new DepartmentTO(id, adress, phoneNumber, email, employees, rentalsStart, rentalsStop);
 		}
 
 		private void checkBeforeBuild(String adress, Integer phoneNumber, String email) {
@@ -103,11 +131,11 @@ public class DepartmentTO {
 			}
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		return "DepartmentTO [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", employees=" + employees + "]";
+				+ ", employees=" + employees + ", rentalsStart=" + rentalsStart + ", rentalsStop=" + rentalsStop + "]";
 	}
-
+	
 }

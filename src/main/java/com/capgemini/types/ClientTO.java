@@ -1,6 +1,8 @@
 package com.capgemini.types;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class ClientTO {
 
@@ -9,13 +11,13 @@ public class ClientTO {
 	private String lastName;
 	private String adress;
 	private String email;
-	private Timestamp dateBirth;
+	private Calendar dateBirth;
 	private Integer phoneNumber;
 	private String creditCard;
-	private RentalTO rental;
+	private List<RentalTO> rentals = new ArrayList<>();
 
-	public ClientTO(Long id, String firstName, String lastName, String adress, String email, Timestamp dateBirth,
-			Integer phoneNumber, String creditCard, RentalTO rental) {
+	public ClientTO(Long id, String firstName, String lastName, String adress, String email, Calendar dateBirth,
+			Integer phoneNumber, String creditCard, List<RentalTO> rentals) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -25,11 +27,11 @@ public class ClientTO {
 		this.dateBirth = dateBirth;
 		this.phoneNumber = phoneNumber;
 		this.creditCard = creditCard;
-		this.rental = rental;
+		this.rentals = rentals;
 	}
 
-	public ClientTO(String firstName, String lastName, String adress, String email, Timestamp dateBirth,
-			Integer phoneNumber, String creditCard, RentalTO rental) {
+	public ClientTO(String firstName, String lastName, String adress, String email, Calendar dateBirth,
+			Integer phoneNumber, String creditCard, List<RentalTO> rentals) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -38,7 +40,7 @@ public class ClientTO {
 		this.dateBirth = dateBirth;
 		this.phoneNumber = phoneNumber;
 		this.creditCard = creditCard;
-		this.rental = rental;
+		this.rentals = rentals;
 	}
 
 	public Long getId() {
@@ -61,7 +63,7 @@ public class ClientTO {
 		return email;
 	}
 
-	public Timestamp getDateBirth() {
+	public Calendar getDateBirth() {
 		return dateBirth;
 	}
 
@@ -72,9 +74,9 @@ public class ClientTO {
 	public String getCreditCard() {
 		return creditCard;
 	}
-	
-	public RentalTO getRental() {
-		return rental;
+
+	public List<RentalTO> getRentals() {
+		return rentals;
 	}
 
 	public static ClientTOBuilder builder() {
@@ -88,10 +90,10 @@ public class ClientTO {
 		private String lastName;
 		private String adress;
 		private String email;
-		private Timestamp dateBirth;
+		private Calendar dateBirth;
 		private Integer phoneNumber;
 		private String creditCard;
-		private RentalTO rental;
+		private List<RentalTO> rentals = new ArrayList<>();
 
 		public ClientTOBuilder() {
 			super();
@@ -122,7 +124,7 @@ public class ClientTO {
 			return this;
 		}
 
-		public ClientTOBuilder withBirthDate(Timestamp date) {
+		public ClientTOBuilder withBirthDate(Calendar date) {
 			this.dateBirth = date;
 			return this;
 		}
@@ -137,18 +139,18 @@ public class ClientTO {
 			return this;
 		}
 
-		public ClientTOBuilder withRentalTO(RentalTO rental) {
-			this.rental = rental;
+		public ClientTOBuilder withRentalsTO(List<RentalTO> rentals) {
+			this.rentals = rentals;
 			return this;
 		}
 
 		public ClientTO build() {
 			checkBeforeBuild(firstName, lastName, adress, email, dateBirth, phoneNumber, creditCard);
-			return new ClientTO(id, firstName, lastName, adress, email, dateBirth, phoneNumber, creditCard, rental);
+			return new ClientTO(id, firstName, lastName, adress, email, dateBirth, phoneNumber, creditCard, rentals);
 		}
 
 		private void checkBeforeBuild(String firstName, String lastName, String adress, String email,
-				Timestamp dateBirth, Integer phoneNumber, String creditCard) {
+				Calendar dateBirth, Integer phoneNumber, String creditCard) {
 
 			boolean isFirstName = false;
 			if (firstName != null && !firstName.isEmpty()) {
@@ -183,13 +185,13 @@ public class ClientTO {
 				throw new RuntimeException("Incorrect 'Car' to be created");
 			}
 		}
-		
-		@Override
-		public String toString() {
-			return "ClientTOBuilder [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress="
-					+ adress + ", email=" + email + ", dateBirth=" + dateBirth + ", phoneNumber=" + phoneNumber
-					+ ", creditCard=" + creditCard + ", rental=" + rental + "]";
-		}
+	}
+
+	@Override
+	public String toString() {
+		return "ClientTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
+				+ ", email=" + email + ", dateBirth=" + dateBirth.getTime() + ", phoneNumber=" + phoneNumber + ", creditCard="
+				+ creditCard + ", rentals=" + rentals + "]";
 	}
 
 }

@@ -10,6 +10,7 @@ import com.capgemini.dao.PositionDao;
 import com.capgemini.domain.DepartmentEntity;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.PositionEntity;
+import com.capgemini.mappers.DepartmentMapper;
 import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.DepartmentService;
@@ -34,8 +35,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	@Transactional(readOnly = false)
 	public DepartmentTO saveDepartment(DepartmentTO department) {
-		// TODO Auto-generated method stub
-		return null;
+		DepartmentEntity departmentEntity = departmentRepository.save(DepartmentMapper.toDepartmentEntity(department));
+		return DepartmentMapper.toDepartmentTO(departmentEntity);
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		PositionEntity entity = positionRepository.findOne(id);
 		return PositionMapper.toPositionTO(entity);
 	}
-
+	
 	@Override
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employee, Long idDep, Long idPos) {
@@ -109,7 +110,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteEmployee(Long id) {
-		employeeRepository.delete(id);
+		PositionEntity updatePosition = positionRepository.findPositionByEmployeeId(id).removeEmployee(id);
+		positionRepository.update(updatePosition);
 	}
 
 }

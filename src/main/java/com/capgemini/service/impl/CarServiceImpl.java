@@ -25,8 +25,20 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
+	public long findCarNo() {
+		return carRepository.count();
+	}
+
+	@Override
 	public CarTO findCarById(Long id) {
 		CarEntity carEntity = carRepository.findOne(id);
 		return CarMapper.toCarTO(carEntity);
 	}
+
+	@Override
+	public CarTO updateCar(CarTO car) {
+		CarEntity carEntity = carRepository.update(CarMapper.toCarEntity(car));
+		return CarMapper.toCarTO(carEntity);
+	}
+	
 }

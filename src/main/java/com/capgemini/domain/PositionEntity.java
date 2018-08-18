@@ -1,8 +1,8 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,20 +35,20 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 	private String position;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "position_id")
-	private Set<EmployeeEntity> employees = new HashSet<>();
+	private List<EmployeeEntity> employees = new ArrayList<>();
 
 	// for hibernate
 	public PositionEntity() {
 	}
 
-	public PositionEntity(Long id, String position, Set<EmployeeEntity> employees) {
+	public PositionEntity(Long id, String position, List<EmployeeEntity> employees) {
 		super();
 		this.id = id;
 		this.position = position;
 		this.employees = employees;
 	}
 
-	public PositionEntity(String position, Set<EmployeeEntity> employees) {
+	public PositionEntity(String position, List<EmployeeEntity> employees) {
 		super();
 		this.position = position;
 		this.employees = employees;
@@ -66,16 +66,26 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 		this.position = position;
 	}
 
-	public Set<EmployeeEntity> getEmployees() {
+	public List<EmployeeEntity> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Set<EmployeeEntity> employees) {
+	public void setEmployees(List<EmployeeEntity> employees) {
 		this.employees = employees;
 	}
 
 	public void addEmployee(EmployeeEntity employee) {
 		this.employees.add(employee);
+	}
+
+	public PositionEntity removeEmployee(Long id) {
+		for(EmployeeEntity e:employees){
+			if(e.getId().equals(id)){
+				this.employees.remove(e);
+				return this;
+			}
+		}
+		return this;
 	}
 
 	@Override

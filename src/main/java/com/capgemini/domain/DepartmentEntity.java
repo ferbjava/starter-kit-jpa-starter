@@ -1,8 +1,8 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,27 +39,37 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 	private String email;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "department_id")
-	private Set<EmployeeEntity> employees = new HashSet<>();
+	private List<EmployeeEntity> employees = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "start_depertment_id")
+	private List<RentalEntity> rentalsStart = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "stop_depertment_id")
+	private List<RentalEntity> rentalsStop = new ArrayList<>();
 
 	// for hibernate
 	public DepartmentEntity() {
 	}
 
-	public DepartmentEntity(Long id, String adress, Integer phoneNumber, String email, Set<EmployeeEntity> employees) {
+	public DepartmentEntity(Long id, String adress, Integer phoneNumber, String email, List<EmployeeEntity> employees, List<RentalEntity> rentalsStart, List<RentalEntity> rentalsStop) {
 		super();
 		this.id = id;
 		this.adress = adress;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.employees = employees;
+		this.rentalsStart = rentalsStart;
+		this.rentalsStop = rentalsStop;
 	}
 
-	public DepartmentEntity(String adress, Integer phoneNumber, String email, Set<EmployeeEntity> employees) {
+	public DepartmentEntity(String adress, Integer phoneNumber, String email, List<EmployeeEntity> employees, List<RentalEntity> rentalsStart, List<RentalEntity> rentalsStop) {
 		super();
 		this.adress = adress;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.employees = employees;
+		this.rentalsStart = rentalsStart;
+		this.rentalsStop = rentalsStop;
 	}
 
 	public Long getId() {
@@ -90,11 +100,11 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 		this.email = email;
 	}
 
-	public Set<EmployeeEntity> getEmployees() {
+	public List<EmployeeEntity> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Set<EmployeeEntity> employees) {
+	public void setEmployees(List<EmployeeEntity> employees) {
 		this.employees = employees;
 	}
 
@@ -102,10 +112,34 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 		this.employees.add(employee);
 	}
 
+	public List<RentalEntity> getRentalsStart() {
+		return rentalsStart;
+	}
+
+	public void setRentalsStart(List<RentalEntity> rentalsStart) {
+		this.rentalsStart = rentalsStart;
+	}
+
+	public void addRentalStart(RentalEntity rentalStart) {
+		this.rentalsStart.add(rentalStart);
+	}
+
+	public List<RentalEntity> getRentalsStop() {
+		return rentalsStop;
+	}
+
+	public void setRentalsStop(List<RentalEntity> rentalsStop) {
+		this.rentalsStop = rentalsStop;
+	}
+
+	public void addRentalStop(RentalEntity rentalStop) {
+		this.rentalsStop.add(rentalStop);
+	}
+	
 	@Override
 	public String toString() {
 		return "DepartmentEntity [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", employees=" + employees + "]";
+				+ ", employees=" + employees + ", rentalsStart=" + rentalsStart + ", rentalsStop=" + rentalsStop + "]";
 	}
-
+	
 }

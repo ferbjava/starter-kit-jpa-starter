@@ -1,8 +1,8 @@
 package com.capgemini.types;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class EmployeeTO {
 
@@ -10,13 +10,12 @@ public class EmployeeTO {
 	private String firstName;
 	private String lastName;
 	private Calendar dateBirth;
-	private Set<CarTO> cars = new HashSet<>();
+	private List<CarTO> cars = new ArrayList<>();
 
 	public EmployeeTO() {
 	}
 
-	public EmployeeTO(Long id, String firstName, String lastName, Calendar dateBirth,
-			Set<CarTO> cars) {
+	public EmployeeTO(Long id, String firstName, String lastName, Calendar dateBirth, List<CarTO> cars) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -25,7 +24,7 @@ public class EmployeeTO {
 		this.cars = cars;
 	}
 
-	public EmployeeTO(String firstName, String lastName, Calendar dateBirth, Set<CarTO> cars) {
+	public EmployeeTO(String firstName, String lastName, Calendar dateBirth, List<CarTO> cars) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -49,7 +48,7 @@ public class EmployeeTO {
 		return dateBirth;
 	}
 
-	public Set<CarTO> getCars() {
+	public List<CarTO> getCars() {
 		return cars;
 	}
 
@@ -63,7 +62,7 @@ public class EmployeeTO {
 		private String firstName;
 		private String lastName;
 		private Calendar dateBirth;
-		private Set<CarTO> cars;
+		private List<CarTO> cars = new ArrayList<>();
 
 		public EmployeeTOBuilder() {
 			super();
@@ -89,7 +88,7 @@ public class EmployeeTO {
 			return this;
 		}
 
-		public EmployeeTOBuilder withCars(Set<CarTO> cars) {
+		public EmployeeTOBuilder withCars(List<CarTO> cars) {
 			this.cars = cars;
 			return this;
 		}
@@ -124,6 +123,5 @@ public class EmployeeTO {
 		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
 				+ dateBirth + ", cars=" + cars + "]";
 	}
-	
 
 }

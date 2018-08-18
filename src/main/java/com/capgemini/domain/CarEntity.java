@@ -1,7 +1,22 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.capgemini.Listeners.CreateListener;
 import com.capgemini.Listeners.UpdateListener;
@@ -37,13 +52,16 @@ public class CarEntity extends AbstractEntity implements Serializable {
 	private Integer enginePower;
 	@Column(nullable = false)
 	private Integer mileage;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "car_id")
+	private List<RentalEntity> rentals = new ArrayList<>();
 
 	// for hibernate
 	public CarEntity() {
 	}
 
 	public CarEntity(String type, String brand, String model, Integer productionYear, String color,
-			Integer engineCapacity, Integer enginePower, Integer mileage) {
+			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalEntity> rentals) {
 		super();
 		this.setType(type);
 		this.setBrand(brand);
@@ -53,6 +71,22 @@ public class CarEntity extends AbstractEntity implements Serializable {
 		this.engineCapacity = engineCapacity;
 		this.enginePower = enginePower;
 		this.mileage = mileage;
+		this.rentals = rentals;
+	}
+	
+	public CarEntity(Long id, String type, String brand, String model, Integer productionYear, String color,
+			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalEntity> rentals) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.brand = brand;
+		this.model = model;
+		this.productionYear = productionYear;
+		this.color = color;
+		this.engineCapacity = engineCapacity;
+		this.enginePower = enginePower;
+		this.mileage = mileage;
+		this.rentals = rentals;
 	}
 
 	public Long getId() {
@@ -121,6 +155,25 @@ public class CarEntity extends AbstractEntity implements Serializable {
 
 	public void setMileage(Integer mileage) {
 		this.mileage = mileage;
+	}
+
+	public List<RentalEntity> getRentals() {
+		return rentals;
+	}
+
+	public void setRentals(List<RentalEntity> rentals) {
+		this.rentals = rentals;
+	}
+
+	public void addRental(RentalEntity rental) {
+		this.rentals.add(rental);
+	}
+
+	@Override
+	public String toString() {
+		return "CarEntity [id=" + id + ", type=" + type + ", brand=" + brand + ", model=" + model + ", productionYear="
+				+ productionYear + ", color=" + color + ", engineCapacity=" + engineCapacity + ", enginePower="
+				+ enginePower + ", mileage=" + mileage + ", rentals=" + rentals + "]";
 	}
 
 }

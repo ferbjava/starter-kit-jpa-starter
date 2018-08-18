@@ -1,9 +1,9 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,14 +42,22 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "CARER_CAR", joinColumns = {
 			@JoinColumn(name = "EMPLOYEE_ID", nullable = false, updatable = false) }, inverseJoinColumns = {
-			@JoinColumn(name = "CAR_ID", nullable = false, updatable = false) })
-	private Set<CarEntity> cars = new HashSet<>();
+					@JoinColumn(name = "CAR_ID", nullable = false, updatable = false) })
+	private List<CarEntity> cars = new ArrayList<>();
 
 	public EmployeeEntity() {
 	}
 
-	public EmployeeEntity(String firstName, String lastName, Calendar dateBirth,
-			Set<CarEntity> cars) {
+	public EmployeeEntity(Long id, String firstName, String lastName, Calendar dateBirth, List<CarEntity> cars) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateBirth = dateBirth;
+		this.cars = cars;
+	}
+
+	public EmployeeEntity(String firstName, String lastName, Calendar dateBirth, List<CarEntity> cars) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -85,11 +93,11 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 		this.dateBirth = dateBirth;
 	}
 
-	public Set<CarEntity> getCars() {
+	public List<CarEntity> getCars() {
 		return cars;
 	}
 
-	public void setCars(Set<CarEntity> cars) {
+	public void setCars(List<CarEntity> cars) {
 		this.cars = cars;
 	}
 
@@ -98,5 +106,5 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 		return "EmployeeEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
 				+ dateBirth + ", cars=" + cars + "]";
 	}
-	
+
 }

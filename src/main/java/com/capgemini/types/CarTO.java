@@ -1,5 +1,8 @@
 package com.capgemini.types;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CarTO {
 
 	private Long id;
@@ -11,9 +14,10 @@ public class CarTO {
 	private Integer engineCapacity;
 	private Integer enginePower;
 	private Integer mileage;
+	private List<RentalTO> rentals = new ArrayList<>();
 
 	public CarTO(String type, String brand, String model, Integer productionYear, String color, Integer engineCapacity,
-			Integer enginePower, Integer mileage) {
+			Integer enginePower, Integer mileage, List<RentalTO> rentals) {
 		super();
 		this.type = type;
 		this.brand = brand;
@@ -23,10 +27,11 @@ public class CarTO {
 		this.engineCapacity = engineCapacity;
 		this.enginePower = enginePower;
 		this.mileage = mileage;
+		this.rentals = rentals;
 	}
 
 	public CarTO(Long id, String type, String brand, String model, Integer productionYear, String color,
-			Integer engineCapacity, Integer enginePower, Integer mileage) {
+			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalTO> rentals) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -37,6 +42,7 @@ public class CarTO {
 		this.engineCapacity = engineCapacity;
 		this.enginePower = enginePower;
 		this.mileage = mileage;
+		this.rentals = rentals;
 	}
 
 	public Long getId() {
@@ -75,6 +81,10 @@ public class CarTO {
 		return mileage;
 	}
 
+	public List<RentalTO> getRentals() {
+		return rentals;
+	}
+
 	public static CarTOBuilder builder() {
 		return new CarTOBuilder();
 	}
@@ -89,6 +99,7 @@ public class CarTO {
 		private Integer engineCapacity;
 		private Integer enginePower;
 		private Integer mileage;
+		private List<RentalTO> rentals = new ArrayList<>();
 
 		public CarTOBuilder() {
 			super();
@@ -139,9 +150,15 @@ public class CarTO {
 			return this;
 		}
 
+		public CarTOBuilder withRentalsTO(List<RentalTO> rentals) {
+			this.rentals = rentals;
+			return this;
+		}
+
 		public CarTO build() {
 			checkBeforeBuild(type, brand, model, productionYear, color, engineCapacity, enginePower, mileage);
-			return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, enginePower, mileage);
+			return new CarTO(id, type, brand, model, productionYear, color, engineCapacity, enginePower, mileage,
+					rentals);
 		}
 
 		private void checkBeforeBuild(String type, String brand, String model, Integer productionYear, String color,
@@ -184,6 +201,13 @@ public class CarTO {
 				throw new RuntimeException("Incorrect 'Car' to be created");
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "CarTO [id=" + id + ", type=" + type + ", brand=" + brand + ", model=" + model + ", productionYear="
+				+ productionYear + ", color=" + color + ", engineCapacity=" + engineCapacity + ", enginePower="
+				+ enginePower + ", mileage=" + mileage + ", rentals=" + rentals + "]";
 	}
 
 }

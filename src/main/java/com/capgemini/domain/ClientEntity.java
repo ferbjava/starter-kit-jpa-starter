@@ -1,8 +1,11 @@
 package com.capgemini.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -13,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.capgemini.Listeners.CreateListener;
@@ -38,20 +41,20 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 	@Column(nullable = false, length = 45)
 	private String email;
 	@Column(nullable = false)
-	private Timestamp dateBirth;
+	private Calendar dateBirth;
 	@Column(nullable = false)
 	private Integer phoneNumber;
 	@Column(nullable = false, length = 45)
 	private String creditCard;
-	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "rental_id")
-	private RentalEntity rental;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "client_id")
+	private List<RentalEntity> rentals = new ArrayList<>();
 
 	public ClientEntity() {
 	}
 
-	public ClientEntity(Long id, String firstName, String lastName, String adress, String email, Timestamp dateBirth,
-			Integer phoneNumber, String creditCard, RentalEntity rental) {
+	public ClientEntity(Long id, String firstName, String lastName, String adress, String email, Calendar dateBirth,
+			Integer phoneNumber, String creditCard, List<RentalEntity> rentals) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,11 +63,11 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 		this.dateBirth = dateBirth;
 		this.phoneNumber = phoneNumber;
 		this.creditCard = creditCard;
-		this.rental = rental;
+		this.rentals = rentals;
 	}
 
-	public ClientEntity(String firstName, String lastName, String adress, String email, Timestamp dateBirth,
-			Integer phoneNumber, String creditCard, RentalEntity rental) {
+	public ClientEntity(String firstName, String lastName, String adress, String email, Calendar dateBirth,
+			Integer phoneNumber, String creditCard, List<RentalEntity> rentals) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.adress = adress;
@@ -72,7 +75,7 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 		this.dateBirth = dateBirth;
 		this.phoneNumber = phoneNumber;
 		this.creditCard = creditCard;
-		this.rental = rental;
+		this.rentals = rentals;
 	}
 
 	public Long getId() {
@@ -111,11 +114,11 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 		this.email = email;
 	}
 
-	public Timestamp getDateBirth() {
+	public Calendar getDateBirth() {
 		return dateBirth;
 	}
 
-	public void setDateBirth(Timestamp dateBirth) {
+	public void setDateBirth(Calendar dateBirth) {
 		this.dateBirth = dateBirth;
 	}
 
@@ -134,21 +137,24 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 	public void setCreditCard(String creditCard) {
 		this.creditCard = creditCard;
 	}
-	
 
-	public RentalEntity getRental() {
-		return rental;
+	public List<RentalEntity> getRentals() {
+		return rentals;
 	}
 
-	public void setRental(RentalEntity rental) {
-		this.rental = rental;
+	public void setRentals(List<RentalEntity> rentals) {
+		this.rentals = rentals;
+	}
+
+	public void addRental(RentalEntity rental) {
+		this.rentals.add(rental);
 	}
 
 	@Override
 	public String toString() {
 		return "ClientEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
-				+ ", email=" + email + ", dateBirth=" + dateBirth + ", phoneNumber=" + phoneNumber + ", creditCard="
-				+ creditCard + ", rental=" + rental + "]";
+				+ ", email=" + email + ", dateBirth=" + dateBirth.getTime() + ", phoneNumber=" + phoneNumber + ", creditCard="
+				+ creditCard + ", rentals=" + rentals + "]";
 	}
 
 }
