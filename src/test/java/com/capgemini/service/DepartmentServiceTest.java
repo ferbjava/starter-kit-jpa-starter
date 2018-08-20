@@ -3,6 +3,8 @@ package com.capgemini.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.Utils.EmployeeSearchCriteria;
 import com.capgemini.Utils.InsertData;
 import com.capgemini.types.DepartmentTO;
 import com.capgemini.types.DepartmentTO.DepartmentTOBuilder;
@@ -28,8 +31,8 @@ public class DepartmentServiceTest {
 	public void shouldAddPositions() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_POSITIONS_NUMBER = 0;
-		long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
+		final long EXPECTED_INITIAL_POSITIONS_NUMBER = 0;
+		final long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
 
 		// when
 		long initialPositionsNo = departmentService.findPositionsNo();
@@ -48,8 +51,8 @@ public class DepartmentServiceTest {
 	public void shouldAddEmployeeWithPosition() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
-		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1;
+		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
+		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1;
 		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
 		departmentService.savePosition(data.getPosById(2));
@@ -88,10 +91,10 @@ public class DepartmentServiceTest {
 	public void shouldRemovePositionAndChildEmployees() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_POSITIONS_NUMBER = 3;
-		long EXPECTED_FINAL_POSITIONS_NUMBER = 2;
-		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
-		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
+		final long EXPECTED_INITIAL_POSITIONS_NUMBER = 3;
+		final long EXPECTED_FINAL_POSITIONS_NUMBER = 2;
+		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
+		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
 		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
 		departmentService.savePosition(data.getPosById(2));
@@ -116,10 +119,10 @@ public class DepartmentServiceTest {
 	public void shouldRemoveOnlyEmployee() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_POSITIONS_NUMBER = 3;
-		long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
-		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
-		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
+		final long EXPECTED_INITIAL_POSITIONS_NUMBER = 3;
+		final long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
+		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
+		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
 		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
 		departmentService.savePosition(data.getPosById(2));
@@ -144,8 +147,8 @@ public class DepartmentServiceTest {
 	public void shouldAddDepartments() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 0;
-		long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 3;
+		final long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 0;
+		final long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 3;
 
 		// when
 		long initialDepartmentsNo = departmentService.findDepartmentNo();
@@ -164,8 +167,8 @@ public class DepartmentServiceTest {
 	public void shouldAddEmployeesToDepartment() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
-		long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2;
+		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 0;
+		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 2;
 		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
 		departmentService.saveDepartment(data.getDepById(1));
 		departmentService.saveDepartment(data.getDepById(2));
@@ -189,8 +192,8 @@ public class DepartmentServiceTest {
 	public void shouldUpdateDepartmentData() {
 		// given
 		InsertData data = new InsertData();
-		long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 1;
-		long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 1;
+		final long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 1;
+		final long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 1;
 		String EXPECTED_NEW_EMAIL = "jakis.email@gmail.com";
 		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
 		long initialDepartmentsNo = departmentService.findDepartmentNo();
@@ -212,4 +215,56 @@ public class DepartmentServiceTest {
 		assertEquals(EXPECTED_NEW_EMAIL, updatedAndSavedDepartment.getEmail());
 	}
 
+	@Test
+	@Transactional
+	public void shouldFindEmployeeFromDepartment() {
+		// given
+		InsertData data = new InsertData();
+		final int EXPECTED_FOUND_EMPLOYEES_NUMBER = 2;
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		DepartmentTO savedDep02 = departmentService.saveDepartment(data.getDepById(1));
+		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), null);
+		EmployeeTO savedEmp02 = departmentService.saveEmployee(data.getEmplById(1), savedDep02.getId(), null);
+		EmployeeTO savedEmp03 = departmentService.saveEmployee(data.getEmplById(2), savedDep02.getId(), null);
+
+		// when
+		List<EmployeeTO> employeeFrom2Department = departmentService.findAllEmployeesFromDepartment(savedDep02.getId());
+		int employeesNo = employeeFrom2Department.size();
+
+		// then
+		assertEquals(EXPECTED_FOUND_EMPLOYEES_NUMBER, employeesNo);
+		assertEquals(savedEmp02.getId(), employeeFrom2Department.get(0).getId());
+		assertEquals(savedEmp03.getId(), employeeFrom2Department.get(1).getId());
+	}
+
+	@Test
+	@Transactional
+	public void shouldFindEmployeeByCriteria() {
+		// given
+		InsertData data = new InsertData();
+		final int EXPECTED_FOUND_EMPLOYEES_NUMBER = 2;
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		DepartmentTO savedDep02 = departmentService.saveDepartment(data.getDepById(1));
+		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), null);
+		EmployeeTO savedEmp02 = departmentService.saveEmployee(data.getEmplById(1), savedDep02.getId(), null);
+		EmployeeTO savedEmp03 = departmentService.saveEmployee(data.getEmplById(2), savedDep02.getId(), null);
+		EmployeeSearchCriteria criteria = new EmployeeSearchCriteria(null, savedDep02.getId(), null);
+
+		// when
+		List<EmployeeTO> employeeByCriteria = departmentService.findEmployeeByCriteria(criteria);
+		int employeesNo = employeeByCriteria.size();
+
+		// then
+		assertEquals(EXPECTED_FOUND_EMPLOYEES_NUMBER, employeesNo);
+		assertEquals(savedEmp02.getId(), employeeByCriteria.get(0).getId());
+		assertEquals(savedEmp03.getId(), employeeByCriteria.get(1).getId());
+	}
+
 }
+
+
+//"SELECT e FROM DepartmentEntity d INNER JOIN d.employees e WHERE d.id = :id"
+//"SELECT e FROM DepartmentEntity d INNER JOIN d.employees e WHERE d.id = :id"
+//
+//"SELECT e FROM EmployeesEntity e INNER JOIN DepartmentEntity d INNER JOIN PositionEntity p INNER JOIN CarEntity c "
+//+ "WHERE d.id = :depId AND p.id = :posId AND c.id = :carId"

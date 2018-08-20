@@ -1,6 +1,7 @@
 package com.capgemini.DAO;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,40 +12,40 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.Utils.InsertData;
 import com.capgemini.dao.EmployeeDao;
-import com.capgemini.dao.PositionDao;
+import com.capgemini.dao.DepartmentDao;
 import com.capgemini.domain.EmployeeEntity;
-import com.capgemini.domain.PositionEntity;
+import com.capgemini.domain.DepartmentEntity;
 import com.capgemini.mappers.EmployeeMapper;
-import com.capgemini.mappers.PositionMapper;
+import com.capgemini.mappers.DepartmentMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
-public class PositionDaoTest {
+public class DepartmentDaoTest {
 
 	@Autowired
-	private PositionDao positionDao;
+	private DepartmentDao departmentDao;
 
 	@Autowired
 	private EmployeeDao employeeDao;
 
 	@Test
 	@Transactional
-	public void shouldFindPositionbyEmployeeId() {
+	public void shouldFindDepartmetnByEmployeeId() {
 		// given
 		InsertData data = new InsertData();
-		PositionEntity positionEntity = PositionMapper.toPositionEntity(data.getPosById(1));
+		DepartmentEntity departmentEntity = DepartmentMapper.toDepartmentEntity(data.getDepById(1));
 		EmployeeEntity employeeEntity = EmployeeMapper.toEmployeeEntity(data.getEmplById(0));
-		positionEntity.addEmployee(employeeEntity);
-		PositionEntity savedPosition = positionDao.save(positionEntity);
+		departmentEntity.addEmployee(employeeEntity);
+		DepartmentEntity savedDepartment = departmentDao.save(departmentEntity);
 		EmployeeEntity savedEmployeeVer01 = employeeDao.getOne(1L);
 
 		// when
-		EmployeeEntity savedEmployeeVer02 = savedPosition.getEmployees().get(0);
-		PositionEntity selectedPosition = positionDao.findPositionByEmployeeId(savedEmployeeVer02.getId());
+		EmployeeEntity savedEmployeeVer02 = savedDepartment.getEmployees().get(0);
+		DepartmentEntity selectedDepartment = departmentDao.findDepartmentByEmployeeId(savedEmployeeVer02.getId());
 
 		// then
-		assertEquals(savedEmployeeVer01.getId(), savedEmployeeVer02.getId());
-		assertEquals(savedPosition.getId(), selectedPosition.getId());
+		assertTrue(savedEmployeeVer01.getId() == savedEmployeeVer02.getId());
+		assertEquals(savedDepartment.getId(), selectedDepartment.getId());
 	}
 
 }

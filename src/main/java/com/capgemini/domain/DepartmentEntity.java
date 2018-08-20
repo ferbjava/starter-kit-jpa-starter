@@ -136,6 +136,16 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 		this.rentalsStop.add(rentalStop);
 	}
 	
+	public DepartmentEntity removeEmployee(Long id){
+		for(EmployeeEntity e:employees){
+			if(e.getId().equals(id)){
+				this.employees.remove(e);
+				return this;
+			}
+		}
+		return this;
+	}
+	
 	@Override
 	public String toString() {
 		return "DepartmentEntity [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email

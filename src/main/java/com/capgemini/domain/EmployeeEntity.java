@@ -39,7 +39,7 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 	private String lastName;
 	@Column(nullable = false)
 	private Calendar dateBirth;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "CARER_CAR", joinColumns = {
 			@JoinColumn(name = "EMPLOYEE_ID", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "CAR_ID", nullable = false, updatable = false) })
@@ -99,6 +99,20 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 
 	public void setCars(List<CarEntity> cars) {
 		this.cars = cars;
+	}
+	
+	public void addCar(CarEntity car){
+		this.cars.add(car);
+	}
+	
+	public EmployeeEntity removeCarById(Long id){
+		for(CarEntity c:cars){
+			if(c.getId().equals(id)){
+				this.cars.remove(c);
+				return this;
+			}
+		}
+		return this;
 	}
 
 	@Override

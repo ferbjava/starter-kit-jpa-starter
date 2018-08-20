@@ -1,9 +1,12 @@
 package com.capgemini.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capgemini.Utils.EmployeeSearchCriteria;
 import com.capgemini.dao.DepartmentDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
@@ -21,16 +24,15 @@ import com.capgemini.types.PositionTO;
 @Service
 @Transactional(readOnly = true)
 public class DepartmentServiceImpl implements DepartmentService {
-	
+
 	@Autowired
 	private DepartmentDao departmentRepository;
-	
+
 	@Autowired
 	private PositionDao positionRepository;
 
 	@Autowired
 	private EmployeeDao employeeRepository;
-
 
 	@Override
 	@Transactional(readOnly = false)
@@ -44,7 +46,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		DepartmentEntity entity = departmentRepository.findOne(id);
 		return DepartmentMapper.toDepartmentTO(entity);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public PositionTO savePosition(PositionTO position) {
@@ -57,16 +59,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 		PositionEntity entity = positionRepository.findOne(id);
 		return PositionMapper.toPositionTO(entity);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public EmployeeTO saveEmployee(EmployeeTO employee, Long idDep, Long idPos) {
 		EmployeeEntity entity = employeeRepository.save(EmployeeMapper.toEmployeeEntity(employee));
-		if(idDep!=null){
+		if (idDep != null) {
 			DepartmentEntity depEntity = departmentRepository.getOne(idDep);
 			depEntity.addEmployee(entity);
 		}
-		if(idPos!=null){
+		if (idPos != null) {
 			PositionEntity positionEntity = positionRepository.getOne(idPos);
 			positionEntity.addEmployee(entity);
 		}
@@ -109,14 +111,30 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteEmployee(Long id) {
-		PositionEntity updatePosition = positionRepository.findPositionByEmployeeId(id).removeEmployee(id);
-		positionRepository.update(updatePosition);
+		if (findPositionsNo() != 0) {
+			PositionEntity updatePosition = positionRepository.findPositionByEmployeeId(id).removeEmployee(id);
+			positionRepository.update(updatePosition);
+		}
+		if (findDepartmentNo() != 0) {
+			DepartmentEntity updatedDepartment = departmentRepository.findDepartmentByEmployeeId(id).removeEmployee(id);
+			departmentRepository.update(updatedDepartment);
+		}
 	}
 
 	@Override
 	public DepartmentTO updateDepartment(DepartmentTO department) {
 		DepartmentEntity entity = departmentRepository.update(DepartmentMapper.toDepartmentEntity(department));
 		return DepartmentMapper.toDepartmentTO(entity);
+	}
+
+	@Override
+	public List<EmployeeTO> findAllEmployeesFromDepartment(Long id) {
+		return EmployeeMapper.map2TOs(departmentRepository.findEmployeesFromDepartment(id));
+	}
+
+	@Override
+	public List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteria criteria) {
+		return EmployeeMapper.map2TOs(employeeRepository.findEmployeeByCriteria(criteria));
 	}
 
 }

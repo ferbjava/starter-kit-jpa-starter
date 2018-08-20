@@ -1,5 +1,8 @@
 package com.capgemini.service;
 
+import java.util.List;
+
+import com.capgemini.Utils.EmployeeSearchCriteria;
 import com.capgemini.types.DepartmentTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
@@ -15,6 +18,9 @@ public interface DepartmentService {
 	
 	EmployeeTO saveEmployee(EmployeeTO employee, Long idDep, Long idPos);
 	EmployeeTO findEmployeeById(Long id);
+	
+	List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteria criteria);
+	List<EmployeeTO> findAllEmployeesFromDepartment(Long id);
 	
 	long findDepartmentNo();
 	long findEmployeesNo();
