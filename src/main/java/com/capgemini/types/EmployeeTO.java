@@ -24,14 +24,6 @@ public class EmployeeTO {
 		this.cars = cars;
 	}
 
-	public EmployeeTO(String firstName, String lastName, Calendar dateBirth, List<CarTO> cars) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dateBirth = dateBirth;
-		this.cars = cars;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -116,12 +108,6 @@ public class EmployeeTO {
 				throw new RuntimeException("Incorrect 'Employee' to be created");
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "EmployeeTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
-				+ dateBirth + ", cars=" + cars + "]";
 	}
 
 }

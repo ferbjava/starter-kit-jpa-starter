@@ -62,16 +62,6 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 		this.rentalsStop = rentalsStop;
 	}
 
-	public DepartmentEntity(String adress, Integer phoneNumber, String email, List<EmployeeEntity> employees, List<RentalEntity> rentalsStart, List<RentalEntity> rentalsStop) {
-		super();
-		this.adress = adress;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.employees = employees;
-		this.rentalsStart = rentalsStart;
-		this.rentalsStop = rentalsStop;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -144,12 +134,6 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 			}
 		}
 		return this;
-	}
-	
-	@Override
-	public String toString() {
-		return "DepartmentEntity [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", employees=" + employees + ", rentalsStart=" + rentalsStart + ", rentalsStop=" + rentalsStop + "]";
 	}
 	
 }

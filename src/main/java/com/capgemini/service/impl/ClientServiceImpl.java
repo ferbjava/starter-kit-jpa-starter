@@ -55,19 +55,13 @@ public class ClientServiceImpl implements ClientService {
 		}
 		if(endDepId!= null){
 			DepartmentEntity endDepEntity = departmentRepository.getOne(endDepId);
-			endDepEntity.addRentalStart(rentalEntity);
+			endDepEntity.addRentalStop(rentalEntity);
 		}
 		if(carId!= null){
 			CarEntity carEntity = carRepository.getOne(carId);
 			carEntity.addRental(rentalEntity);
 		}
 		return RentalMapper.toRentalTO(rentalEntity);
-	}
-
-	@Override
-	public ClientTO findClientById(Long id) {
-		ClientEntity entity = clientRepository.findOne(id);
-		return ClientMapper.toClientTO(entity);
 	}
 
 	@Override
@@ -78,12 +72,6 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public long findRentalsNo() {
 		return rentalRepository.count();
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void deleteClient(Long id) {
-		clientRepository.delete(id);
 	}
 
 }

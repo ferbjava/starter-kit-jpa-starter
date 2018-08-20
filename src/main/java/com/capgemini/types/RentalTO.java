@@ -17,13 +17,6 @@ public class RentalTO {
 		this.charge = charge;
 	}
 
-	public RentalTO(Calendar dateStart, Calendar dateStop, Double charge) {
-		super();
-		this.dateStart = dateStart;
-		this.dateStop = dateStop;
-		this.charge = charge;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -85,12 +78,6 @@ public class RentalTO {
 				throw new RuntimeException("Incorrect 'Rental' to be created");
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "RentalTO [id=" + id + ", dateStart=" + dateStart.getTime() + ", dateStop=" + dateStop.getTime()
-				+ ", charge=" + charge + "]";
 	}
 
 }

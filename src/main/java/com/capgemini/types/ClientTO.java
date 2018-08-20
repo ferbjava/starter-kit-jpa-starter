@@ -30,19 +30,6 @@ public class ClientTO {
 		this.rentals = rentals;
 	}
 
-	public ClientTO(String firstName, String lastName, String adress, String email, Calendar dateBirth,
-			Integer phoneNumber, String creditCard, List<RentalTO> rentals) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.adress = adress;
-		this.email = email;
-		this.dateBirth = dateBirth;
-		this.phoneNumber = phoneNumber;
-		this.creditCard = creditCard;
-		this.rentals = rentals;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -185,13 +172,6 @@ public class ClientTO {
 				throw new RuntimeException("Incorrect 'Car' to be created");
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "ClientTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
-				+ ", email=" + email + ", dateBirth=" + dateBirth.getTime() + ", phoneNumber=" + phoneNumber + ", creditCard="
-				+ creditCard + ", rentals=" + rentals + "]";
 	}
 
 }

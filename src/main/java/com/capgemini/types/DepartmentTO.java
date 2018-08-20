@@ -29,17 +29,6 @@ public class DepartmentTO {
 		this.rentalsStop = rentalsStop;
 	}
 
-	public DepartmentTO(String adress, Integer phoneNumber, String email, List<EmployeeTO> employees,
-			List<RentalTO> rentalsStart, List<RentalTO> rentalsStop) {
-		super();
-		this.adress = adress;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.employees = employees;
-		this.rentalsStart = rentalsStart;
-		this.rentalsStop = rentalsStop;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -130,12 +119,6 @@ public class DepartmentTO {
 				throw new RuntimeException("Incorrect 'Position' to be created");
 			}
 		}
-	}
-	
-	@Override
-	public String toString() {
-		return "DepartmentTO [id=" + id + ", adress=" + adress + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", employees=" + employees + ", rentalsStart=" + rentalsStart + ", rentalsStop=" + rentalsStop + "]";
 	}
 	
 }

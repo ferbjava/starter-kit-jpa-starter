@@ -16,20 +16,6 @@ public class CarTO {
 	private Integer mileage;
 	private List<RentalTO> rentals = new ArrayList<>();
 
-	public CarTO(String type, String brand, String model, Integer productionYear, String color, Integer engineCapacity,
-			Integer enginePower, Integer mileage, List<RentalTO> rentals) {
-		super();
-		this.type = type;
-		this.brand = brand;
-		this.model = model;
-		this.productionYear = productionYear;
-		this.color = color;
-		this.engineCapacity = engineCapacity;
-		this.enginePower = enginePower;
-		this.mileage = mileage;
-		this.rentals = rentals;
-	}
-
 	public CarTO(Long id, String type, String brand, String model, Integer productionYear, String color,
 			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalTO> rentals) {
 		super();
@@ -201,13 +187,6 @@ public class CarTO {
 				throw new RuntimeException("Incorrect 'Car' to be created");
 			}
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "CarTO [id=" + id + ", type=" + type + ", brand=" + brand + ", model=" + model + ", productionYear="
-				+ productionYear + ", color=" + color + ", engineCapacity=" + engineCapacity + ", enginePower="
-				+ enginePower + ", mileage=" + mileage + ", rentals=" + rentals + "]";
 	}
 
 }

@@ -57,14 +57,6 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 		this.cars = cars;
 	}
 
-	public EmployeeEntity(String firstName, String lastName, Calendar dateBirth, List<CarEntity> cars) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dateBirth = dateBirth;
-		this.cars = cars;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -113,12 +105,6 @@ public class EmployeeEntity extends AbstractEntity implements Serializable {
 			}
 		}
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "EmployeeEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateBirth="
-				+ dateBirth + ", cars=" + cars + "]";
 	}
 
 }

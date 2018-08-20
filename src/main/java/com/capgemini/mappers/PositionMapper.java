@@ -20,12 +20,4 @@ public class PositionMapper {
 		}
 		return new PositionEntity(positionTO.getPosition(), EmployeeMapper.map2Entities(positionTO.getEmployees()));
 	}
-
-	public static PositionEntity toPositionEntityWithId(PositionTO positionTO) {
-		if (positionTO == null) {
-			return null;
-		}
-		return new PositionEntity(positionTO.getId(), positionTO.getPosition(),
-				EmployeeMapper.map2Entities(positionTO.getEmployees()));
-	}
 }

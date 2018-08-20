@@ -29,11 +29,8 @@ public class CarDaoImpl extends AbstractDao<CarEntity, Long> implements CarDao {
 	@Override
 	public List<CarEntity> findCarsWithOver10Clients() {
 		TypedQuery<CarEntity> query = entityManager.createQuery(
-				"SELECT c FROM CarEntity c, ClientEntity cl"
-				+ " WHERE c.id = "
-				+ " AND r MEMBER OF cl.rentals"
-				+ " HAVING COUNT(cl)>10",
-				CarEntity.class);
+				"SELECT c FROM CarEntity c, ClientsEntity cl WHERE SELECT( COUNT(cl) FROM ClientsEntity cl HAVING COUNT(DISTINCT(cl))>10)"
+				, CarEntity.class);
 		return query.getResultList();
 	}
 

@@ -53,19 +53,6 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 	public ClientEntity() {
 	}
 
-	public ClientEntity(Long id, String firstName, String lastName, String adress, String email, Calendar dateBirth,
-			Integer phoneNumber, String creditCard, List<RentalEntity> rentals) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.adress = adress;
-		this.email = email;
-		this.dateBirth = dateBirth;
-		this.phoneNumber = phoneNumber;
-		this.creditCard = creditCard;
-		this.rentals = rentals;
-	}
-
 	public ClientEntity(String firstName, String lastName, String adress, String email, Calendar dateBirth,
 			Integer phoneNumber, String creditCard, List<RentalEntity> rentals) {
 		this.firstName = firstName;
@@ -148,13 +135,6 @@ public class ClientEntity extends AbstractEntity implements Serializable {
 
 	public void addRental(RentalEntity rental) {
 		this.rentals.add(rental);
-	}
-
-	@Override
-	public String toString() {
-		return "ClientEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
-				+ ", email=" + email + ", dateBirth=" + dateBirth.getTime() + ", phoneNumber=" + phoneNumber + ", creditCard="
-				+ creditCard + ", rentals=" + rentals + "]";
 	}
 
 }

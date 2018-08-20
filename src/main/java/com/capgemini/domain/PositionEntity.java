@@ -40,13 +40,6 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 	public PositionEntity() {
 	}
 
-	public PositionEntity(Long id, String position, List<EmployeeEntity> employees) {
-		super();
-		this.id = id;
-		this.position = position;
-		this.employees = employees;
-	}
-
 	public PositionEntity(String position, List<EmployeeEntity> employees) {
 		super();
 		this.position = position;
@@ -85,11 +78,6 @@ public class PositionEntity extends AbstractEntity implements Serializable {
 			}
 		}
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "PositionEntity [id=" + id + ", position=" + position + ", employees=" + employees + "]";
 	}
 
 }

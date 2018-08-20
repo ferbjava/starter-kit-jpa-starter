@@ -37,14 +37,6 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 	public RentalEntity() {
 	}
 
-	public RentalEntity(Long id, Calendar dateStart, Calendar dateStop, Double charge) {
-		super();
-		this.id = id;
-		this.dateStart = dateStart;
-		this.dateStop = dateStop;
-		this.charge = charge;
-	}
-
 	public RentalEntity(Calendar dateStart, Calendar dateStop, Double charge) {
 		super();
 		this.dateStart = dateStart;
@@ -78,12 +70,6 @@ public class RentalEntity extends AbstractEntity implements Serializable {
 
 	public void setCharge(Double charge) {
 		this.charge = charge;
-	}
-	
-	@Override
-	public String toString() {
-		return "RentalEntity [id=" + id + ", dateStart=" + dateStart.getTime() + ", dateStop=" + dateStop.getTime() + ", charge=" + charge
-				+ "]";
 	}
 	
 }

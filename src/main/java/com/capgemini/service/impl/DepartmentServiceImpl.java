@@ -42,21 +42,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public DepartmentTO findDepartmentById(Long id) {
-		DepartmentEntity entity = departmentRepository.findOne(id);
-		return DepartmentMapper.toDepartmentTO(entity);
-	}
-
-	@Override
 	@Transactional(readOnly = false)
 	public PositionTO savePosition(PositionTO position) {
 		PositionEntity entity = positionRepository.save(PositionMapper.toPositionEntity(position));
-		return PositionMapper.toPositionTO(entity);
-	}
-
-	@Override
-	public PositionTO findPositionById(Long id) {
-		PositionEntity entity = positionRepository.findOne(id);
 		return PositionMapper.toPositionTO(entity);
 	}
 

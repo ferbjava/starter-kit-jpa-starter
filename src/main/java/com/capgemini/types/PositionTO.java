@@ -16,12 +16,6 @@ public class PositionTO {
 		this.employees.addAll(employees);
 	}
 
-	public PositionTO(String position, List<EmployeeTO> employees) {
-		super();
-		this.position = position;
-		this.employees.addAll(employees);
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -79,49 +73,6 @@ public class PositionTO {
 				throw new RuntimeException("Incorrect 'Position' to be created");
 			}
 		}
-
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PositionTO other = (PositionTO) obj;
-		if (employees == null) {
-			if (other.employees != null)
-				return false;
-		} else if (!employees.equals(other.employees))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (position == null) {
-			if (other.position != null)
-				return false;
-		} else if (!position.equals(other.position))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "PositionTO [id=" + id + ", position=" + position + ", employees=" + employees + "]";
 	}
 
 }

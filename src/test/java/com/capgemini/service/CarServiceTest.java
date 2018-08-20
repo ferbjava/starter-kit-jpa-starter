@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -14,10 +15,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.types.CarTO;
+import com.capgemini.types.ClientTO;
+import com.capgemini.types.DepartmentTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
+import com.capgemini.types.RentalTO.RentalTOBuilder;
 import com.capgemini.utils.InsertData;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
+import com.capgemini.types.RentalTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
@@ -28,6 +33,9 @@ public class CarServiceTest {
 
 	@Autowired
 	private DepartmentService departmentService;
+
+	@Autowired
+	private ClientService clientService;
 
 	@Test
 	@Transactional
@@ -288,6 +296,62 @@ public class CarServiceTest {
 		for(CarTO selectedCar:carsByBrand){
 			assertEquals(EXPECTED_BRAND, selectedCar.getBrand());
 		}
+	}
+
+	@Test
+	@Transactional
+	public void shouldFindCarsWithOver10Clients() {
+		// given
+		InsertData data = new InsertData();
+		data.initialize();
+		final long EXPECTED_INITIAL_RENTALS = 0;
+		final long EXPECTED_FINAL_RENTALS = 13;
+		final long EXPECTED_SELECTED_CARS = 1;
+
+		ClientTO savedClient01 = clientService.saveClient(data.getClientById(0));
+		ClientTO savedClient02 = clientService.saveClient(data.getClientById(1));
+		ClientTO savedClient03 = clientService.saveClient(data.getClientById(2));
+		ClientTO savedClient04 = clientService.saveClient(data.getClientById(3));
+		ClientTO savedClient05 = clientService.saveClient(data.getClientById(4));
+		ClientTO savedClient06 = clientService.saveClient(data.getClientById(5));
+		ClientTO savedClient07 = clientService.saveClient(data.getClientById(6));
+		ClientTO savedClient08 = clientService.saveClient(data.getClientById(7));
+		ClientTO savedClient09 = clientService.saveClient(data.getClientById(8));
+		ClientTO savedClient10 = clientService.saveClient(data.getClientById(9));
+		DepartmentTO savedDepart01 = departmentService.saveDepartment(data.getDepById(0));
+		DepartmentTO savedDepart02 = departmentService.saveDepartment(data.getDepById(1));
+		DepartmentTO savedDepart03 = departmentService.saveDepartment(data.getDepById(2));
+		CarTO savedCar01 = carService.saveCar(data.getCarById(0));
+		CarTO savedCar02 = carService.saveCar(data.getCarById(1));
+		long initialRentalsNo = clientService.findRentalsNo();
+		RentalTO rental01 = new RentalTOBuilder().withDateStart(new GregorianCalendar(2018, 5, 20))
+				.withDateStop(new GregorianCalendar(2018, 6, 15)).withCharge(130.0).build();
+		clientService.saveRental(rental01, savedClient01.getId(), savedDepart01.getId(), savedDepart01.getId(), savedCar01.getId());
+		RentalTO rental02 = new RentalTOBuilder().withDateStart(new GregorianCalendar(2018, 1, 1))
+				.withDateStop(new GregorianCalendar(2018, 1, 19)).withCharge(1000.0).build();
+		clientService.saveRental(rental02, savedClient02.getId(), savedDepart02.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient03.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient04.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient05.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient06.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient07.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient08.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient09.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		clientService.saveRental(rental02, savedClient10.getId(), savedDepart03.getId(), savedDepart02.getId(), savedCar01.getId());
+		
+		clientService.saveRental(rental02, savedClient01.getId(), savedDepart01.getId(), savedDepart01.getId(), savedCar02.getId());
+		clientService.saveRental(rental02, savedClient02.getId(), savedDepart01.getId(), savedDepart01.getId(), savedCar02.getId());
+		clientService.saveRental(rental02, savedClient03.getId(), savedDepart01.getId(), savedDepart01.getId(), savedCar02.getId());
+		long finalRentalsNo = clientService.findRentalsNo();
+
+		// when
+		List<CarTO> selectedCars = carService.findCarsWithOver10Clients();
+		long selectedCarsNo = selectedCars.size();
+
+		// then
+		assertEquals(EXPECTED_INITIAL_RENTALS, initialRentalsNo);
+		assertEquals(EXPECTED_FINAL_RENTALS, finalRentalsNo);
+		assertEquals(EXPECTED_SELECTED_CARS, selectedCarsNo);
 	}
 
 }

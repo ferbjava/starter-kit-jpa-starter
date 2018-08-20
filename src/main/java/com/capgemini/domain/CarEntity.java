@@ -59,20 +59,6 @@ public class CarEntity extends AbstractEntity implements Serializable {
 	// for hibernate
 	public CarEntity() {
 	}
-
-	public CarEntity(String type, String brand, String model, Integer productionYear, String color,
-			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalEntity> rentals) {
-		super();
-		this.setType(type);
-		this.setBrand(brand);
-		this.setModel(model);
-		this.setProductionYear(productionYear);
-		this.color = color;
-		this.engineCapacity = engineCapacity;
-		this.enginePower = enginePower;
-		this.mileage = mileage;
-		this.rentals = rentals;
-	}
 	
 	public CarEntity(Long id, String type, String brand, String model, Integer productionYear, String color,
 			Integer engineCapacity, Integer enginePower, Integer mileage, List<RentalEntity> rentals) {
@@ -167,13 +153,6 @@ public class CarEntity extends AbstractEntity implements Serializable {
 
 	public void addRental(RentalEntity rental) {
 		this.rentals.add(rental);
-	}
-
-	@Override
-	public String toString() {
-		return "CarEntity [id=" + id + ", type=" + type + ", brand=" + brand + ", model=" + model + ", productionYear="
-				+ productionYear + ", color=" + color + ", engineCapacity=" + engineCapacity + ", enginePower="
-				+ enginePower + ", mileage=" + mileage + ", rentals=" + rentals + "]";
 	}
 
 }
