@@ -80,4 +80,9 @@ public class CarServiceImpl implements CarService {
 		return CarMapper.map2TOs(carRepository.findCarsByBrand(brand));
 	}
 
+	@Override
+	public List<CarTO> findCarsWithOver10Clients() {
+		return CarMapper.map2TOs(carRepository.findCarsWithOver10Clients());
+	}
+
 }

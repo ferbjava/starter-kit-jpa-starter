@@ -6,8 +6,9 @@ import com.capgemini.types.RentalTO;
 public interface ClientService {
 
 	ClientTO saveClient(ClientTO client);
+	ClientTO findClientById(Long id);
 
-	RentalTO saveRental(RentalTO rental);
+	RentalTO saveRental(RentalTO rental, Long clientId, Long startDepId, Long endDEpId, Long carId);
 
 	long findClientsNo();
 	long findRentalsNo();

@@ -113,6 +113,42 @@ public class InsertData {
 				.withAdress("1983 Keeling Estate\nAlland, AK 59190").withEmail("pwatsica@gmail.com")
 				.withBirthDate(new GregorianCalendar(1980, 3, 14)).withPhoneNumber(589819894)
 				.withCreditCard("7115232476757633").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Sadye").withLastName("Zulauf")
+				.withAdress("0767 Glenda Underpass\nSouth Jeffreyberg, AZ 8").withEmail("veda38@yahoo.com")
+				.withBirthDate(new GregorianCalendar(1997, 5, 10)).withPhoneNumber(801939518)
+				.withCreditCard("1437055799696180").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Amie").withLastName("Cole")
+				.withAdress("5044 Beer Lock\nLake Pierce, NY 04358").withEmail("tjacobs@hotmail.com")
+				.withBirthDate(new GregorianCalendar(1990, 9, 12)).withPhoneNumber(203863756)
+				.withCreditCard("2876813929114077").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Mackenzie").withLastName("White")
+				.withAdress("92176 Jenkins Terrace\nPort Adamburgh, UT 4076").withEmail("lowe.coleman@yahoo.com")
+				.withBirthDate(new GregorianCalendar(1987, 3, 9)).withPhoneNumber(745471451)
+				.withCreditCard("8232376596166029").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Manuel").withLastName("Nader")
+				.withAdress("0307 Casper Underpass Suite 712\nEsperanzahave").withEmail("everette62@hotmail.com")
+				.withBirthDate(new GregorianCalendar(1999, 3, 8)).withPhoneNumber(329706311)
+				.withCreditCard("3173288976152738").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Reanna").withLastName("Hills")
+				.withAdress("96409 Ayla Ridges\nSouth Cadeberg, WI 04570-19").withEmail("ebony16@yahoo.com")
+				.withBirthDate(new GregorianCalendar(1978, 11, 21)).withPhoneNumber(717333053)
+				.withCreditCard("4154810686078337").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Anika").withLastName("Shanahan")
+				.withAdress("29056 Bernie Terrace\nBrakusbury, GA 95319").withEmail("jadon00@gmail.com")
+				.withBirthDate(new GregorianCalendar(1974, 11, 9)).withPhoneNumber(170947160)
+				.withCreditCard("5803908780217171").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Laila").withLastName("Crona")
+				.withAdress("20669 Parisian Lodge Suite 685\nNorth Sarai, W").withEmail("deon73@hotmail.com")
+				.withBirthDate(new GregorianCalendar(1981, 7, 8)).withPhoneNumber(552414076)
+				.withCreditCard("4339016998807589").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Earnest").withLastName("Senger")
+				.withAdress("194 McLaughlin Islands\nJohnstonside, AK 18021").withEmail("dfritsch@hotmail.com")
+				.withBirthDate(new GregorianCalendar(1996, 12, 6)).withPhoneNumber(357062741)
+				.withCreditCard("9131159662372537").build());
+		this.clients.add(new ClientTOBuilder().withFirstName("Aimee").withLastName("Vandervort")
+				.withAdress("658 Schowalter Cliff\nVaughnfort, ND 64094").withEmail("zterry@gmail.com")
+				.withBirthDate(new GregorianCalendar(1986, 6, 23)).withPhoneNumber(150298441)
+				.withCreditCard("9198839205006759").build());
 	}
 
 	private void fillCarList() {

@@ -255,13 +255,13 @@ public class DepartmentServiceTest {
 		final long EXPECTED_FINAL_POSITIONS_NUMBER = 2;
 		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 3;
 		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1;
-		PositionTO savedManager = departmentService.savePosition(data.getPosById(0));
-		PositionTO savedSeller = departmentService.savePosition(data.getPosById(1));
+		departmentService.savePosition(data.getPosById(0));
+		departmentService.savePosition(data.getPosById(1));
 		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
 		DepartmentTO savedDep02 = departmentService.saveDepartment(data.getDepById(1));
-		departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), null);// savedManager.getId());
-		departmentService.saveEmployee(data.getEmplById(1), savedDep01.getId(), null);// savedSeller.getId());
-		departmentService.saveEmployee(data.getEmplById(2), savedDep02.getId(), null);// savedSeller.getId());
+		departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), null);
+		departmentService.saveEmployee(data.getEmplById(1), savedDep01.getId(), null);
+		departmentService.saveEmployee(data.getEmplById(2), savedDep02.getId(), null);
 		long initialDepartmentsNo = departmentService.findDepartmentNo();
 		long initialPositionsNo = departmentService.findPositionsNo();
 		long initialEmployeesNo = departmentService.findEmployeesNo();

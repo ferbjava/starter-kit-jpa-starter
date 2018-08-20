@@ -81,7 +81,7 @@ public class RentalTO {
 		}
 
 		private void checkBeforeBuild(Calendar dateStart, Calendar dateStop, Double charge) {
-			if (dateStart != null && dateStop != null && charge != null) {
+			if (dateStart == null && dateStop == null && charge == null) {
 				throw new RuntimeException("Incorrect 'Rental' to be created");
 			}
 		}

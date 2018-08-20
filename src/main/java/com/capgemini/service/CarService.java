@@ -12,6 +12,7 @@ public interface CarService {
 	List<CarTO> findCarsByEmployee(Long id);
 	List<CarTO> findCarsByType(String type);
 	List<CarTO> findCarsByBrand(String brand);
+	List<CarTO> findCarsWithOver10Clients();
 	
 	long findCarNo();
 	
