@@ -10,12 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.capgemini.Utils.InsertData;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.DepartmentDao;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.domain.DepartmentEntity;
 import com.capgemini.mappers.EmployeeMapper;
+import com.capgemini.utils.InsertData;
 import com.capgemini.mappers.DepartmentMapper;
 
 @RunWith(SpringRunner.class)
@@ -33,6 +33,8 @@ public class DepartmentDaoTest {
 	public void shouldFindDepartmetnByEmployeeId() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		DepartmentEntity departmentEntity = DepartmentMapper.toDepartmentEntity(data.getDepById(1));
 		EmployeeEntity employeeEntity = EmployeeMapper.toEmployeeEntity(data.getEmplById(0));
 		departmentEntity.addEmployee(employeeEntity);

@@ -11,13 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.capgemini.Utils.InsertData;
 import com.capgemini.dao.CarDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.domain.CarEntity;
 import com.capgemini.domain.EmployeeEntity;
 import com.capgemini.mappers.CarMapper;
 import com.capgemini.mappers.EmployeeMapper;
+import com.capgemini.utils.InsertData;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.profiles.active=hsql")
@@ -34,6 +34,8 @@ public class EmployeeDaoTest {
 	public void shouldFindEmployeesByCarId() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		CarEntity car01 = CarMapper.toCarEntity(data.getCarById(0));
 		CarEntity car02 = CarMapper.toCarEntity(data.getCarById(1));
 		EmployeeEntity employee01 = EmployeeMapper.toEmployeeEntity(data.getEmplById(0));

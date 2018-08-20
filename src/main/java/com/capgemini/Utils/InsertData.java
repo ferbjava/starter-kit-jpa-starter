@@ -1,4 +1,4 @@
-package com.capgemini.Utils;
+package com.capgemini.utils;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -36,6 +36,9 @@ public class InsertData {
 	private List<CarTO> cars = new ArrayList<>();
 
 	public InsertData() {
+	}
+	
+	public void initialize(){
 		fillDepartmentList();
 		fillPositionList();
 		fillEmployeeList();

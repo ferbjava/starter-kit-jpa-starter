@@ -1,12 +1,12 @@
-package com.capgemini.Utils;
+package com.capgemini.types;
 
-public class EmployeeSearchCriteria {
+public class EmployeeSearchCriteriaTO {
 	
 	private Long carId;
 	private Long departmentId;
 	private Long positionId;
 	
-	public EmployeeSearchCriteria(Long carId, Long departmentId, Long positionId){
+	public EmployeeSearchCriteriaTO(Long carId, Long departmentId, Long positionId){
 		this.setCarId(carId);
 		this.setDepartmentId(departmentId);
 		this.setPositionId(positionId);

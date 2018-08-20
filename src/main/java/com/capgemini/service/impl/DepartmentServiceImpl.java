@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.capgemini.Utils.EmployeeSearchCriteria;
 import com.capgemini.dao.DepartmentDao;
 import com.capgemini.dao.EmployeeDao;
 import com.capgemini.dao.PositionDao;
@@ -18,6 +17,7 @@ import com.capgemini.mappers.EmployeeMapper;
 import com.capgemini.mappers.PositionMapper;
 import com.capgemini.service.DepartmentService;
 import com.capgemini.types.DepartmentTO;
+import com.capgemini.types.EmployeeSearchCriteriaTO;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
 
@@ -133,8 +133,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public List<EmployeeTO> findEmployeeByCriteria(EmployeeSearchCriteria criteria) {
-		return EmployeeMapper.map2TOs(employeeRepository.findEmployeeByCriteria(criteria));
+	public List<EmployeeTO> findEmployeesByCriteria(EmployeeSearchCriteriaTO criteria) {
+		return EmployeeMapper.map2TOs(employeeRepository.findEmployeesByCriteria(criteria));
 	}
 
 }

@@ -13,9 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.capgemini.Utils.InsertData;
 import com.capgemini.types.CarTO;
 import com.capgemini.types.CarTO.CarTOBuilder;
+import com.capgemini.utils.InsertData;
 import com.capgemini.types.EmployeeTO;
 import com.capgemini.types.PositionTO;
 
@@ -87,9 +87,11 @@ public class CarServiceTest {
 	@Transactional
 	public void shouldAddCar() {
 		// given
+		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_START_CARS_NO=0;
 		final long EXPECTED_FINAL_CARS_NO=1;
-		InsertData data = new InsertData();
 		
 		// when
 		long startCarsNo = carService.findCarNo();
@@ -106,6 +108,8 @@ public class CarServiceTest {
 	public void shouldFindCarById() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		CarTO savedCar = carService.saveCar(data.getCarById(0));
 
 		// when
@@ -122,6 +126,8 @@ public class CarServiceTest {
 	public void shouldUpdateCar() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		CarTO savedCar = carService.saveCar(data.getCarById(0));
 		final String EXPECTED_COLOR = "pink";
 
@@ -154,6 +160,8 @@ public class CarServiceTest {
 	public void shouldFindCarsByEmployee() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_SELECTED_CARS = 2;
 		PositionTO seller = departmentService.savePosition(data.getPosById(1));
 		EmployeeTO emp01 = departmentService.saveEmployee(data.getEmplById(0), null, seller.getId());
@@ -179,6 +187,8 @@ public class CarServiceTest {
 	public void shouldRemoveCarsWithoutCarer() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_INITIAL_CARS = 2;
 		final long EXPECTED_FINAL_CARS = 1;
 		EmployeeTO emp01 = departmentService.saveEmployee(data.getEmplById(0), null, null);
@@ -201,6 +211,8 @@ public class CarServiceTest {
 	public void shouldRemoveCarsWithCarer() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_INITIAL_CARS = 2;
 		final long EXPECTED_FINAL_CARS = 1;
 		final long EXPECTED_INITIAL_CARS_UNDER_EMPLOYEE = 1;
@@ -229,6 +241,8 @@ public class CarServiceTest {
 	public void shouldFindCarByType() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_CARS = 3;
 		final long EXPECTED_CARS_BY_TYPE = 2;
 		final String EXPECTED_TYPE = "combii";
@@ -254,6 +268,8 @@ public class CarServiceTest {
 	public void shouldFindCarByBrand() {
 		// given
 		InsertData data = new InsertData();
+		data.initialize();
+		
 		final long EXPECTED_CARS = 3;
 		final long EXPECTED_CARS_BY_BRAND = 2;
 		final String EXPECTED_BRAND = "Skoda";
