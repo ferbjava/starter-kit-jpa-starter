@@ -61,9 +61,9 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(Long id) {
-		if(employeeRepository.count()!=0){
+		if (employeeRepository.count() != 0) {
 			List<EmployeeEntity> entities = employeeRepository.findEmployeesByCar(id);
-			for(EmployeeEntity e:entities){
+			for (EmployeeEntity e : entities) {
 				e.removeCarById(id);
 			}
 		}
@@ -79,5 +79,5 @@ public class CarServiceImpl implements CarService {
 	public List<CarTO> findCarsByBrand(String brand) {
 		return CarMapper.map2TOs(carRepository.findCarsByBrand(brand));
 	}
-	
+
 }

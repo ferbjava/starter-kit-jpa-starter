@@ -137,4 +137,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return EmployeeMapper.map2TOs(employeeRepository.findEmployeesByCriteria(criteria));
 	}
 
+	@Override
+	public List<EmployeeTO> findEmployeesFromDepartmentWithCar(Long idDepartment, Long idCar) {
+		return EmployeeMapper.map2TOs(employeeRepository.findEmployeesFromDepartmentWithCar(idDepartment, idCar));
+	}
+
 }

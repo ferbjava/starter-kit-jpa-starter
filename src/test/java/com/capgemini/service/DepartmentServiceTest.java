@@ -135,24 +135,31 @@ public class DepartmentServiceTest {
 		
 		final long EXPECTED_INITIAL_POSITIONS_NUMBER = 3;
 		final long EXPECTED_FINAL_POSITIONS_NUMBER = 3;
+		final long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 1;
+		final long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 1;
 		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 1;
 		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 0;
 		departmentService.savePosition(data.getPosById(0));
 		PositionTO savedPos2 = departmentService.savePosition(data.getPosById(1));
 		departmentService.savePosition(data.getPosById(2));
-		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), null, savedPos2.getId());
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), savedPos2.getId());
 
 		// when
 		long initialPositionsNumber = departmentService.findPositionsNo();
+		long initialDepartmentsNumber = departmentService.findDepartmentNo();
 		long initialEmployeesNumber = departmentService.findEmployeesNo();
 		departmentService.deleteEmployee(savedEmp01.getId());
 		long finalPositionsNumber = departmentService.findPositionsNo();
+		long finalDepartmentsNumber = departmentService.findDepartmentNo();
 		long finalEmployeesNumber = departmentService.findEmployeesNo();
 
 		// then
 		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNumber);
+		assertEquals(EXPECTED_INITIAL_DEPARTMENTS_NUMBER, initialDepartmentsNumber);
 		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNumber);
 		assertEquals(EXPECTED_FINAL_POSITIONS_NUMBER, finalPositionsNumber);
+		assertEquals(EXPECTED_FINAL_DEPARTMENTS_NUMBER, finalDepartmentsNumber);
 		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNumber);
 	}
 
@@ -237,6 +244,45 @@ public class DepartmentServiceTest {
 
 	@Test
 	@Transactional
+	public void shouldRemoveDepartment() {
+		// given
+		InsertData data = new InsertData();
+		data.initialize();
+		
+		final long EXPECTED_INITIAL_DEPARTMENTS_NUMBER = 2;
+		final long EXPECTED_FINAL_DEPARTMENTS_NUMBER = 1;
+		final long EXPECTED_INITIAL_POSITIONS_NUMBER = 2;
+		final long EXPECTED_FINAL_POSITIONS_NUMBER = 2;
+		final long EXPECTED_INITIAL_EMPLOYEES_NUMBER = 3;
+		final long EXPECTED_FINAL_EMPLOYEES_NUMBER = 1;
+		PositionTO savedManager = departmentService.savePosition(data.getPosById(0));
+		PositionTO savedSeller = departmentService.savePosition(data.getPosById(1));
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		DepartmentTO savedDep02 = departmentService.saveDepartment(data.getDepById(1));
+		departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), null);// savedManager.getId());
+		departmentService.saveEmployee(data.getEmplById(1), savedDep01.getId(), null);// savedSeller.getId());
+		departmentService.saveEmployee(data.getEmplById(2), savedDep02.getId(), null);// savedSeller.getId());
+		long initialDepartmentsNo = departmentService.findDepartmentNo();
+		long initialPositionsNo = departmentService.findPositionsNo();
+		long initialEmployeesNo = departmentService.findEmployeesNo();
+
+		// when
+		departmentService.deleteDepartment(savedDep01.getId());
+		long finalDepartmentsNo = departmentService.findDepartmentNo();
+		long finalPositionsNo = departmentService.findPositionsNo();
+		long finalEmployeesNo = departmentService.findEmployeesNo();
+
+		// then
+		assertEquals(EXPECTED_INITIAL_DEPARTMENTS_NUMBER, initialDepartmentsNo);
+		assertEquals(EXPECTED_FINAL_DEPARTMENTS_NUMBER, finalDepartmentsNo);
+		assertEquals(EXPECTED_INITIAL_POSITIONS_NUMBER, initialPositionsNo);
+		assertEquals(EXPECTED_FINAL_POSITIONS_NUMBER, finalPositionsNo);
+		assertEquals(EXPECTED_INITIAL_EMPLOYEES_NUMBER, initialEmployeesNo);
+		assertEquals(EXPECTED_FINAL_EMPLOYEES_NUMBER, finalEmployeesNo);
+	}
+
+	@Test
+	@Transactional
 	public void shouldFindEmployeeFromDepartment() {
 		// given
 		InsertData data = new InsertData();
@@ -257,6 +303,39 @@ public class DepartmentServiceTest {
 		assertEquals(EXPECTED_FOUND_EMPLOYEES_NUMBER, employeesNo);
 		assertEquals(savedEmp02.getId(), employeeFrom2Department.get(0).getId());
 		assertEquals(savedEmp03.getId(), employeeFrom2Department.get(1).getId());
+	}
+
+	@Test
+	@Transactional
+	public void shouldFindEmployeeFromDepartmentWithCar() {
+		// given
+		InsertData data = new InsertData();
+		data.initialize();
+		
+		final int EXPECTED_FOUND_EMPLOYEES_NUMBER = 2;
+		PositionTO savedSeller = departmentService.savePosition(data.getPosById(1));
+		DepartmentTO savedDep01 = departmentService.saveDepartment(data.getDepById(0));
+		DepartmentTO savedDep02 = departmentService.saveDepartment(data.getDepById(1));
+		EmployeeTO savedEmp01 = departmentService.saveEmployee(data.getEmplById(0), savedDep01.getId(), savedSeller.getId());
+		EmployeeTO savedEmp02 = departmentService.saveEmployee(data.getEmplById(1), savedDep01.getId(), savedSeller.getId());
+		EmployeeTO savedEmp03 = departmentService.saveEmployee(data.getEmplById(2), savedDep01.getId(), savedSeller.getId());
+		EmployeeTO savedEmp04 = departmentService.saveEmployee(data.getEmplById(3), savedDep02.getId(), savedSeller.getId());
+		CarTO savedCar01 = carService.saveCar(data.getCarById(0));
+		CarTO savedCar02 = carService.saveCar(data.getCarById(1));
+		CarTO savedCar03 = carService.saveCar(data.getCarById(2));
+		carService.addCarer(savedCar01.getId(), savedEmp01.getId());
+		carService.addCarer(savedCar01.getId(), savedEmp02.getId());
+		carService.addCarer(savedCar02.getId(), savedEmp03.getId());
+		carService.addCarer(savedCar03.getId(), savedEmp04.getId());
+
+		// when
+		List<EmployeeTO> employeeFromDepartmentWithCars = departmentService.findEmployeesFromDepartmentWithCar(savedDep01.getId(), savedCar01.getId());
+		int employeesNo = employeeFromDepartmentWithCars.size();
+
+		// then
+		assertEquals(EXPECTED_FOUND_EMPLOYEES_NUMBER, employeesNo);
+		assertEquals(savedEmp01.getId(), employeeFromDepartmentWithCars.get(0).getId());
+		assertEquals(savedEmp02.getId(), employeeFromDepartmentWithCars.get(1).getId());
 	}
 
 	@Test

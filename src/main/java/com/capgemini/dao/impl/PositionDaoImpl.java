@@ -13,8 +13,7 @@ public class PositionDaoImpl extends AbstractDao<PositionEntity, Long> implement
 	@Override
 	public PositionEntity findPositionByEmployeeId(Long id) {
 		TypedQuery<PositionEntity> query = entityManager.createQuery(
-				"SELECT p FROM PositionEntity p INNER JOIN p.employees e WHERE e.id = :id",
-				PositionEntity.class);
+				"SELECT p FROM PositionEntity p INNER JOIN p.employees e WHERE e.id = :id", PositionEntity.class);
 		return query.setParameter("id", id).getSingleResult();
 	}
 

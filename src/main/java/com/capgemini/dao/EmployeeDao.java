@@ -9,5 +9,6 @@ public interface EmployeeDao extends Dao<EmployeeEntity, Long> {
 
 	List<EmployeeEntity> findEmployeesByCar(Long id);
 	List<EmployeeEntity> findEmployeesByCriteria(EmployeeSearchCriteriaTO criteria);
+	List<EmployeeEntity> findEmployeesFromDepartmentWithCar(Long idDepartment, Long idCar);
 
 }

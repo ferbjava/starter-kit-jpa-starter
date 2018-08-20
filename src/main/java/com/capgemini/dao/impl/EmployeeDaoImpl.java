@@ -65,4 +65,15 @@ public class EmployeeDaoImpl extends AbstractDao<EmployeeEntity, Long> implement
 		return query.getResultList();
 	}
 
+	@Override
+	public List<EmployeeEntity> findEmployeesFromDepartmentWithCar(Long idDepartment, Long idCar) {
+		CarEntity car = entityManager.getReference(CarEntity.class, idCar);
+		TypedQuery<EmployeeEntity> query = entityManager.createQuery(
+				"SELECT e FROM EmployeeEntity e, DepartmentEntity d"
+					+ " WHERE e MEMBER OF d.employees AND d.id = :idDepartment"
+					+ " AND :car MEMBER OF e.cars",
+					EmployeeEntity.class);
+		return query.setParameter("car", car).setParameter("idDepartment", idDepartment).getResultList();
+	}
+
 }

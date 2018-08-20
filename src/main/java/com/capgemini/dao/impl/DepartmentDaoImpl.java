@@ -25,13 +25,5 @@ public class DepartmentDaoImpl extends AbstractDao<DepartmentEntity, Long> imple
 	public List<EmployeeEntity> findEmployeesFromDepartment(Long id) {
 		return getOne(id).getEmployees();
 	}
-
-	@Override
-	public List<EmployeeEntity> findCarCarersFromDepartment(Long idDep, Long idCa) {
-		TypedQuery<EmployeeEntity> query = entityManager.createQuery(
-				"SELECT d FROM DepartmentEntity d INNER JOIN d.employees e WHERE e.id = :id",
-				EmployeeEntity.class);
-		return query.setParameter("id", idDep).getResultList();
-	}
 	
 }

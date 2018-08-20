@@ -37,7 +37,7 @@ public class DepartmentEntity extends AbstractEntity implements Serializable {
 	private Integer phoneNumber;
 	@Column(nullable = false, length = 45)
 	private String email;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "department_id")
 	private List<EmployeeEntity> employees = new ArrayList<>();
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

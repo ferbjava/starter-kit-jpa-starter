@@ -21,6 +21,7 @@ public interface DepartmentService {
 	
 	List<EmployeeTO> findEmployeesByCriteria(EmployeeSearchCriteriaTO criteria);
 	List<EmployeeTO> findAllEmployeesFromDepartment(Long id);
+	List<EmployeeTO> findEmployeesFromDepartmentWithCar(Long idDepartment, Long idCar);
 	
 	long findDepartmentNo();
 	long findEmployeesNo();
